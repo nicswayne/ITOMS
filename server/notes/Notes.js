@@ -1,4 +1,5 @@
 const mongoose = require( mongoose );
+const updated = require( '../updated/Updated' );
 
 const Notes = new mongoose.Schema( {
 
@@ -6,11 +7,10 @@ const Notes = new mongoose.Schema( {
 	date: { type: Date },
 	desc: { type: String, required: true },
 	body: { type: String, required: true },
-	updated: {
-		date: { type: Date, default: new Date },
-		user: { type: mongoose.Schema.Types.ObjectId, ref: `Users` }
-	}
+	updated: updated
 
 };
 
 module.exports = mongoose.model( 'Notes', Notes );
+
+// linked to referrals and reps

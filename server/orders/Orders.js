@@ -10,3 +10,5 @@ const Orders = new mongoose.Schema( {
 };
 
 module.exports = mongoose.model( 'Orders', Orders );
+
+// linked to drugs, implants, materials, boneGrafts

@@ -19,3 +19,5 @@ const Practice = new mongoose.Schema( {
 };
 
 module.exports = mongoose.model( 'Practice', Practice );
+
+// linked to users

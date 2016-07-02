@@ -1,4 +1,5 @@
 const mongoose = require( mongoose );
+const updated = require( '../updated/Updated' );
 
 const Implants = new mongoose.Schema( {
 
@@ -7,12 +8,14 @@ const Implants = new mongoose.Schema( {
 	reference: { type: String, required: true },
 	rep: { type: mongoose.Schema.Types.ObjectId, ref: `Reps` },
 	orders: [ { type: mongoose.Schema.Types.ObjectId, ref: `Orders` } ],
-	updated: {
-		date: { type: Date, default: new Date },
-		user: { type: mongoose.Schema.Types.ObjectId, ref: `Users` }
-	},
+	onHand: { type: Number, min: 0 },
+	minOnHand: { type: Number, min: 0 },
+	nextReorderDate: { type: Date },
+	updated: updated,
 	active: { type: Boolean, default: true }
 
 };
 
 module.exports = mongoose.model( 'Implants', Implants );
+
+//linked to ptImplants, inventory

@@ -24,3 +24,6 @@ const Patients = new mongoose.Schema( {
 };
 
 module.exports = mongoose.model( 'Patients', Patients );
+
+
+// linked to referrals

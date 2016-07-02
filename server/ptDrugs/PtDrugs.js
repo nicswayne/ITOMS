@@ -1,11 +1,9 @@
 const mongoose = require( mongoose );
+const updated = require( '../updated/Updated' );
 
 const PtDrugs = new mongoose.Schema( {
 
-	updated: {
-		date: { type: Date, default: new Date },
-		user: { type: mongoose.Schema.Types.ObjectId, ref: `Users` }
-	},
+	updated: updated,
 	date: { type: Date, default: new Date },
 	drug: { type: mongoose.Schema.Types.ObjectId, ref: `Drugs`, required: true },
 	amountUsed: { type: Number, required: true },
@@ -14,3 +12,6 @@ const PtDrugs = new mongoose.Schema( {
 };
 
 module.exports = mongoose.model( 'PtDrugs', PtDrugs );
+
+//linked to patient
+//updates drugs qty

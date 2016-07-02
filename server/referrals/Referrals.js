@@ -1,4 +1,5 @@
 const mongoose = require( mongoose );
+const updated = require( '../updated/Updated' );
 
 const Referrals = new mongoose.Schema( {
 
@@ -18,13 +19,13 @@ const Referrals = new mongoose.Schema( {
 	email: { type: String },
 	patients: [ { type: mongoose.Schema.Types.ObjectId, ref: `Patients` } ],
 	notes: [ { type: mongoose.Schema.Types.ObjectId, ref: `Notes` } ],
-	active: { type: Boolean },
-	updated: {
-		date: { type: Date, default: new Date },
-		user: { type: mongoose.Schema.Types.ObjectId, ref: `Users` }
-	}
+	active: { type: Boolean, default: true },
+	updated: updated
 
 
 };
 
 module.exports = mongoose.model( 'Referrals', Referrals );
+
+
+//linked to patients, ptImplants, ptBoneGrafts

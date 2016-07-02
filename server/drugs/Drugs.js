@@ -1,4 +1,5 @@
 const mongoose = require( mongoose );
+const updated = require( '../updated/Updated' );
 
 const Drugs = new mongoose.Schema( {
 
@@ -10,14 +11,15 @@ const Drugs = new mongoose.Schema( {
 	remainingVol: { type: Number, min: 0 },
 	onHand: { type: Number, min: 0, default: 0 },
 	minOnHand: { type: Number, min: 0, default: 0 },
+	nextReorderDate: { type: Date },
 	orders: [ { type: mongoose.Schema.Types.ObjectId, ref: `Orders` } ],
-	updated: {
-		date: { type: Date, default: new Date },
-		user: { type: mongoose.Schema.Types.ObjectId, ref: `Users` }
-	},
+	updated: updated,
 	active: { type: Boolean, default: true }
 
 
 };
 
 module.exports = mongoose.model( 'Drugs', Drugs );
+
+
+// linked to ptDrugs, inventory
