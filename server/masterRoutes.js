@@ -9,6 +9,7 @@ const referralRoutes = require( './referrals/referralRoutes' );
 const patientRoutes = require( './patients/patientRoutes' );
 const ptImplantRoutes = require( './ptImplants/ptImplantRoutes' );
 const ptDrugRoutes = require( './ptDrugs/ptDrugRoutes' );
+const inventoryRoutes = require( './inventory/inventoryRoutes' );
 
 module.exports = ( app ) => {
 
@@ -23,5 +24,6 @@ module.exports = ( app ) => {
 	patientRoutes( app );
 	ptImplantRoutes( app );
 	ptDrugRoutes( app );
+	inventoryRoutes( app );
 
 }

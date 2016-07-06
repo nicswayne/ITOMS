@@ -1,7 +1,8 @@
-const inventoryCtrl = require( 'inventoryCtrl' );
+const inventoryCtrl = require( './inventoryCtrl' );
 
 module.exports = app => {
 
-	app.get( `/:practice/inventory`, inventoryCtrl.find );
+	app.get( `/api/inventory`, inventoryCtrl.find );
+	app.post( `/api/inventory`, inventoryCtrl.create );
 
 };

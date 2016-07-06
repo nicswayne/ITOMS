@@ -39,11 +39,29 @@ module.exports = {
 		.populate( `referral`, `firstName lastName suffix practiceName phone fax email active` )
 		.populate( `implants`, `implant lot insertionDate referral tooth` )
 		.populate( `drugs` )
-		.exec( ( err, populatedPatients ) => {
+		.exec( ( err, ptDrug ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			return res.status( 200 ).json( populatedPatients );
+			Drugs.populate( ptDrug, {
+				path: `drugs.drug`
+				,	select: `brand generic vialType`
+			}
+			, ( err, populatedPtDrug ) => {
+				if ( err ) {
+					return res.status( 500 ).json( err );
+				}
+				Implants.populate( populatedPtDrug, {
+					path: `implants.implant`
+					, select: `brand size`
+				}
+			, ( err, populatedPtImplant ) => {
+				if ( err ) {
+					return res.status( 500 ).json( err );
+				}
+				return res.status( 200 ).json( populatedPtImplant );
+			} );
+			} );
 		} );
 	}
 
