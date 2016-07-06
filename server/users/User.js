@@ -1,6 +1,6 @@
-const mongoose = require( mongoose );
+const mongoose = require( 'mongoose' );
 
-const Users = new mongoose.Schema( {
+const User = mongoose.Schema( {
 
 	name: { type: String, required: true, trim: true },
 	userName: { type: String, unique: true, required: true, trim: true },
@@ -32,4 +32,6 @@ const Users = new mongoose.Schema( {
 	mergePatient: { type: Boolean, required: true },
 	mergeReferrals: { type: Boolean, required: true }
 
-};
+} );
+
+module.exports = mongoose.model( 'User', User );

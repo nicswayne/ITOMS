@@ -1,4 +1,4 @@
-const mongoose = require( mongoose );
+const mongoose = require( 'mongoose' );
 const updated = require( '../updated/Updated' );
 
 const Notes = new mongoose.Schema( {
@@ -9,7 +9,7 @@ const Notes = new mongoose.Schema( {
 	body: { type: String, required: true },
 	updated: updated
 
-};
+} );
 
 module.exports = mongoose.model( 'Notes', Notes );
 

@@ -1,11 +1,11 @@
-const noteCtrl = require( 'noteCtrl' );
+const noteCtrl = require( './noteCtrl' );
 
 module.exports = app => {
 
-	app.get( `/:practice/notes`, noteCtrl.find );
-	app.get( `/:practice/notes/:id`, noteCtrl.findOne );
-	app.put( `/:practice/notes/:id`, noteCtrl.update );
-	app.post( `/:practice/notes/:type`, noteCtrl.create );
-	app.delete( `/:practice/notes/:id`, noteCtrl.delete );
+	app.get( `/api/notes`, noteCtrl.find );
+	app.get( `/api/notes/:id`, noteCtrl.findOne );
+	app.put( `/api/notes/:id`, noteCtrl.update );
+	app.post( `/api/notes`, noteCtrl.create );
+	app.delete( `/api/notes/:id`, noteCtrl.delete );
 
 };

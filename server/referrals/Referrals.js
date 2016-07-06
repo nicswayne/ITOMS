@@ -1,4 +1,4 @@
-const mongoose = require( mongoose );
+const mongoose = require( 'mongoose' );
 const updated = require( '../updated/Updated' );
 
 const Referrals = new mongoose.Schema( {
@@ -23,7 +23,7 @@ const Referrals = new mongoose.Schema( {
 	updated: updated
 
 
-};
+} );
 
 module.exports = mongoose.model( 'Referrals', Referrals );
 

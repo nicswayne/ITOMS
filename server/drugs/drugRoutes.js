@@ -2,10 +2,12 @@ const drugCtrl = require( './drugCtrl' );
 
 module.exports = app => {
 
-	app.get( `/:practice/drugs`, drugCtrl.find );
-	app.get( `/:practice/drugs/:id`, drugCtrl.findOne );
-	app.put( `/:practice/drugs/:id`, drugCtrl.update );
-	app.post( `/:practice/drugs`, drugCtrl.create );
-	app.delete( `/:practice/drugs/:id`, drugCtrl.delete );
+	// app.get( `/api/drugs/:drugId/:orderId`, drugCtrl.findOrder );
+	app.get( `/api/drugs/:id`, drugCtrl.findOne );
+	app.get( `/api/drugs`, drugCtrl.find );
+	app.put( `/api/drugs/:id`, drugCtrl.update );
+	app.post( `/api/drugs`, drugCtrl.create );
+	app.delete( `/api/drugs/:id`, drugCtrl.delete );
+	app.delete( `/api/drugs/:drugId/:orderId`, drugCtrl.deleteOrder );
 
 };

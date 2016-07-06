@@ -1,5 +1,5 @@
-const mongoose = require( mongoose );
-const updated = require( '../updated/Updated' );
+const mongoose = require( 'mongoose' );
+const updated = require( '../Updated/Updated' );
 
 const Drugs = new mongoose.Schema( {
 
@@ -14,10 +14,11 @@ const Drugs = new mongoose.Schema( {
 	nextReorderDate: { type: Date },
 	orders: [ { type: mongoose.Schema.Types.ObjectId, ref: `Orders` } ],
 	updated: updated,
-	active: { type: Boolean, default: true }
+	active: { type: Boolean, default: true },
+	rep: { type: mongoose.Schema.Types.ObjectId, ref: `Reps` }
 
 
-};
+} );
 
 module.exports = mongoose.model( 'Drugs', Drugs );
 

@@ -1,4 +1,4 @@
-const mongoose = require( mongoose );
+const mongoose = require( 'mongoose' );
 const updated = require( '../updated/Updated' );
 
 const Materials = new mongoose.Schema( {
@@ -11,12 +11,12 @@ const Materials = new mongoose.Schema( {
 	reorderInterval: { type: Number },
 	intervalType: { type: String, enum: [ 'days', 'weeks', 'months', 'years' ] },
 	nextReorderDate:{ type: Date },
-	rep: { type: mongoose.Schema.Types.ObjectId, ref: `Reps` }
+	rep: { type: mongoose.Schema.Types.ObjectId, ref: `Reps` },
 	orders: [ { type: mongoose.Schema.Types.ObjectId, ref: `Orders` } ],
 	updated: updated,
 	active: { type: Boolean, default: true }
 
-}
+} );
 
 module.exports = mongoose.model( 'Materials', Materials );
 

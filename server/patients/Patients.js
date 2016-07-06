@@ -1,4 +1,5 @@
-const mongoose = require( mongoose );
+const mongoose = require( 'mongoose' );
+const updated = require( '../updated/Updated' );
 
 const Patients = new mongoose.Schema( {
 
@@ -18,10 +19,11 @@ const Patients = new mongoose.Schema( {
 	referral: [ { type: mongoose.Schema.Types.ObjectId, ref: `Referrals`, required: true } ],
 	// boneGrafts: [ { type: mongoose.Schema.Types.ObjectId, ref: `PtBoneGrafts` } ]
 	implants: [ { type: mongoose.Schema.Types.ObjectId, ref: `PtImplants` } ],
-	drugs: [ { type: mongoose.Schema.Types.ObjectId, ref: `PtDrugs` } ]
+	drugs: [ { type: mongoose.Schema.Types.ObjectId, ref: `PtDrugs` } ],
+	updated: updated
 
 
-};
+} );
 
 module.exports = mongoose.model( 'Patients', Patients );
 

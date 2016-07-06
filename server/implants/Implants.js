@@ -1,4 +1,4 @@
-const mongoose = require( mongoose );
+const mongoose = require( 'mongoose' );
 const updated = require( '../updated/Updated' );
 
 const Implants = new mongoose.Schema( {
@@ -14,7 +14,7 @@ const Implants = new mongoose.Schema( {
 	updated: updated,
 	active: { type: Boolean, default: true }
 
-};
+} );
 
 module.exports = mongoose.model( 'Implants', Implants );
 
