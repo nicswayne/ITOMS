@@ -6,6 +6,7 @@ const Practice = new mongoose.Schema( {
 	address: { type: String },
 	city: { type: String },
 	state: { type: String },
+	phone: { type: String, minLength: 10 },
 	zip: { type: Number },
 	providers: [ { type: String, required: true } ]
 	paymentHistory: [ {

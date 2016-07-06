@@ -1,4 +1,4 @@
-const mongoose = require( mongoose );
+const mongoose = require( 'mongoose' );
 const updated = require( '../updated/Updated' );
 
 const PtDrugs = new mongoose.Schema( {
@@ -6,10 +6,10 @@ const PtDrugs = new mongoose.Schema( {
 	updated: updated,
 	date: { type: Date, default: new Date },
 	drug: { type: mongoose.Schema.Types.ObjectId, ref: `Drugs`, required: true },
-	amountUsed: { type: Number, required: true },
-	amountWasted: { type: Number }
+	volumeUsed: { type: Number, required: true },
+	volumeWasted: { type: Number }
 
-};
+} );
 
 module.exports = mongoose.model( 'PtDrugs', PtDrugs );
 

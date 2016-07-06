@@ -4,7 +4,7 @@ module.exports = {
 
 	find( req, res, next ) {
 		PtDrug.find( { } )
-		.populate( `drug` )
+		.populate( `drug`, `brand generic strength active vialType` )
 		.exec( ( err, populatedPtDrug ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
@@ -14,11 +14,13 @@ module.exports = {
 	},
 
 	findOne( req, res, next ) {
-		PtDrug.findById( req.params.id, (err, ptDrug ) => {
+		PtDrug.findById( req.params.id )
+		.populate( `drug`, `brand generic strength active vialType` )
+		.exec( ( err, populatedPtDrug ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			return res.status( 200 ).json( ptDrug );
+			return res.status( 200 ).json( populatedPtDrug );
 		})
 	},
 

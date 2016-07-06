@@ -4,8 +4,8 @@ module.exports = {
 
 	find( req, res, next ) {
 		PtImplant.find( { } )
-		.populate( `implant` )
-		.populate( `referral` )
+		.populate( `implant`, `active brand size onHand` )
+		.populate( `referral`, `firstName lastName suffix practiceName phone email active` )
 		.exec( ( err, populatedPtImplant ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
@@ -15,7 +15,10 @@ module.exports = {
 	},
 
 	findOne( req, res, next ) {
-		PtImplant.findById( req.params.id, (err, ptImplant ) => {
+		PtImplant.findById( req.params.id )
+		.populate( `implant`, `active brand size onHand` )
+		.populate( `referral`, `firstName lastName suffix practiceName phone email active` )
+		.exec( ( err, ptImplant ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}

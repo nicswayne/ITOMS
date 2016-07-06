@@ -1,4 +1,4 @@
-const mongoose = require( mongoose );
+const mongoose = require( 'mongoose' );
 const updated = require( '../updated/Updated' );
 
 const PtImplants = new mongoose.Schema( {
@@ -11,13 +11,13 @@ const PtImplants = new mongoose.Schema( {
 	removalDate: { type: Date },
 	protheticDate: { type: Date },
 	healingAbutmentDate: { type: Date },
-	referral: { type: mongoose.Schema.Types.ObjectId, ref: `Referral` },
+	referral: { type: mongoose.Schema.Types.ObjectId, ref: `Referrals` },
 	boneQty: { type: String, enum: [ ``, `` ] },
 	boneQlty:{ type: String, enum: [ ``, `` ] },
 	boneStatus:{ type: String, enum: [ ``, `` ] },
 	prostheticType: { type: String, enum: [ `endentulous`, `bridge`, `prothetic`, `single` ] }
 
-};
+} );
 
 
 module.exports = mongoose.model( 'PtImplants', PtImplants );

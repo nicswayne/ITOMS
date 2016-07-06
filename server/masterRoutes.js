@@ -7,6 +7,8 @@ const noteRoutes = require( './notes/noteRoutes' );
 const repRoutes = require( './reps/repRoutes' );
 const referralRoutes = require( './referrals/referralRoutes' );
 const patientRoutes = require( './patients/patientRoutes' );
+const ptImplantRoutes = require( './ptImplants/ptImplantRoutes' );
+const ptDrugRoutes = require( './ptDrugs/ptDrugRoutes' );
 
 module.exports = ( app ) => {
 
@@ -19,5 +21,7 @@ module.exports = ( app ) => {
 	repRoutes( app );
 	referralRoutes( app );
 	patientRoutes( app );
+	ptImplantRoutes( app );
+	ptDrugRoutes( app );
 
 }

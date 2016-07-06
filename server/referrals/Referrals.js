@@ -11,11 +11,11 @@ const Referrals = new mongoose.Schema( {
 		locationName: { type: String, trim: true },
 		address: { type: String },
 		city: { type: String },
-		state: { type: String },
-		zip: { type: Number }
+		state: { type: String, minLength: 2 },
+		zip: { type: Number, minLength: 5, maxLength: 9 }
 	} ],
-	phone: { type: Number },
-	fax: { type: Number },
+	phone: { type: String, minLength: 10 },
+	fax: { type: String, minLength: 10 },
 	email: { type: String },
 	patients: [ { type: mongoose.Schema.Types.ObjectId, ref: `Patients` } ],
 	notes: [ { type: mongoose.Schema.Types.ObjectId, ref: `Notes` } ],

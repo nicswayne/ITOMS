@@ -1,61 +1,80 @@
 const Patient = require( './Patients' );
+const Drugs = require( '../drugs/Drugs' );
+const Implants = require( '../implants/Implants' );
 
 module.exports = {
 
-	find( req, res, next ) {
+	find( req, res ) {
 		Patient.find( { } )
-		.populate( `referral` )
-		.populate( `implants` )
+		.populate( `referral`, `firstName lastName suffix practiceName phone fax email active` )
+		.populate( `implants`, `implant lot insertionDate referral tooth` )
 		.populate( `drugs` )
-		.exec( (err, populatedPatients ) => {
+		.exec( ( err, ptDrug ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			return res.status( 200 ).json( populatedPatients );
-		})
-	},
+			Drugs.populate( ptDrug, {
+				path: `drugs.drug`
+				,	select: `brand generic vialType`
+			}, ( err, populatedPtDrug ) => {
+				if ( err ) {
+					return res.status( 500 ).json( err );
+				}
+				Implants.populate( populatedPtDrug, {
+					path: `implants.implant`
+					, select: `brand size`
+				}
+				, ( err, populatedPtImplant ) => {
+					if ( err ) {
+						return res.status( 500 ).json( err );
+					}
+					return res.status( 200 ).json( populatedPtImplant );
+				} );
+			} );
+		} );
+	}
 
-	findOne( req, res, next ) {
+	, findOne( req, res ) {
 		Patient.findById( req.params.id )
-		.populate( `referral` )
-		.populate( `implants` )
+		.populate( `referral`, `firstName lastName suffix practiceName phone fax email active` )
+		.populate( `implants`, `implant lot insertionDate referral tooth` )
 		.populate( `drugs` )
-		.exec( (err, populatedPatients ) => {
+		.exec( ( err, populatedPatients ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( populatedPatients );
-		})
-	},
+		} );
+	}
 
-	update( req, res, next ) {
+	, update( req, res ) {
 		Patient.findByIdAndUpdate( req.params.id, req.body, ( err, patient ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( patient );
-		} )
-	},
+		} );
+	}
 
-	create( req, res, next ) {
+	, create( req, res ) {
 		new Patient( req.body ).save( ( err, newPatient ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 201 ).json( newPatient );
-		})
-	},
+		} );
+	}
 
-	delete( req, res, next ) {
+	, delete( req, res ) {
 		Patient.findByIdAndRemove( req.params.id, ( err, deletedPatient ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( deletedPatient );
-		})
-	},
+		} );
+	}
 
-	deleteImplant( req, res, next ) {
+	, deleteImplant( req, res ) {
 		Patient.findById( req.params.PatientId, ( err, patient ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
@@ -69,17 +88,17 @@ module.exports = {
 						return res.status( 500 ).json( err );
 					}
 					return res.status( 200 ).json( deletedImplant );
-				})
-			})
-		})
-	},
-	
-	deleteDrug( req, res, next ) {
-		Patient.findById( req.params.PatientId, ( err, drug ) => {
+				} );
+			} );
+		} );
+	}
+
+	, deleteDrug( req, res ) {
+		Patient.findById( req.params.PatientId, ( err, patient ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			patient.drugs.id( req.params.drugId, ( err, drug ) => {
+			patient.drugs.findById( req.params.drugId, ( err, drug ) => {
 				if ( err ) {
 					return res.status( 500 ).json( err );
 				}
@@ -88,9 +107,9 @@ module.exports = {
 						return res.status( 500 ).json( err );
 					}
 					return res.status( 200 ).json( deletedDrug );
-				})
-			})
-		})
+				} );
+			} );
+		} );
 	}
- 
-}
+
+};

@@ -4,7 +4,7 @@ module.exports = {
 
 	find( req, res, next ) {
 		Referral.find( { } )
-		.populate( `patients` )
+		.populate( `patients`, `firstName lastName implants DOB gender ssn` )
 		.populate( `notes`, `date desc body` )
 		.exec( ( err, populatedReferral ) => {
 			if ( err ) {
@@ -16,7 +16,7 @@ module.exports = {
 
 	findOne( req, res, next ) {
 		Referral.findById( req.params.id )
-		.populate( `patients` )
+		.populate( `patients`, `firstName lastName implants DOB gender ssn` )
 		.populate( `notes`, `date desc body` )
 		.exec( ( err, populatedReferral ) => {
 			if ( err ) {
