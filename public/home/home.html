@@ -6,7 +6,105 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Home Page</h1>
+                        <ul ng-repeat="drug in drugs track by drug._id">
+                        <h2><strong>Drugs</strong></h2>
+                            <li ng-click="show = !show">
+                                <strong>Brand:</strong> {{drug.brand}}
+                            </li>
+                            <li>
+                                <strong>Amount to Order:</strong> {{drug.minOnHand - drug.onHand}} vial(s)
+                            </li>
+                            <li>
+                                <strong>On Hand:</strong> {{drug.onHand}} vial(s)
+                            </li>
+                            <ul ng-show="show">
+                                <li>
+                                    <strong>Generic:</strong> {{drug.generic}}
+                                </li>
+                                <li>
+                                    <strong>Strength:</strong> {{drug.strength}}
+                                </li>
+                                <li>
+                                    <strong>Vial Size:</strong> {{drug.vialSize}} {{drug.vialType}}
+                                </li>
+                                <li>
+                                    <strong>Min Quantity:</strong> {{drug.minOnHand}} vial(s)
+                                </li>
+                                <li>
+                                    <strong>Next Reorder Date:</strong> {{drug.nextReorderDate | date : 'MMM d, y'}}
+                                </li>
+                                <li>
+                                    <strong>Last Order Date:</strong> {{drug.orders[drug.orders.length - 1].orderDate | date :'MMM d, y'}} 
+                                </li>
+                                <li>
+                                    <strong>Last Order Quantity:</strong> {{drug.orders[drug.orders.length - 1].qty}} 
+                                </li>
+                            </ul>
+                            <button ng-click="getRep(drug.rep)">Contact Rep</button>
+                        </ul>
+                        <ul ng-repeat="implant in implants track by implant._id">
+                        <h2><strong>Implants</strong></h2>
+                            <li ng-click="show = !show">
+                                <strong>Brand:</strong> {{implant.brand}}
+                            </li>
+                            <li>
+                                <strong>Size:</strong> {{implant.size}}
+                            </li>
+                            <li>
+                                <strong>Reference:</strong> #{{implant.reference}}
+                            </li>
+                            <li>
+                                <strong>On Hand:</strong> {{implant.onHand}}
+                            </li>
+                            <li>
+                                <strong>Amount to Order:</strong> {{implant.minOnHand - implant.onHand}}
+                            </li>
+                            <ul ng-show="show">
+                                <li>
+                                    <strong>Min Quantity:</strong> {{implant.minOnHand}}
+                                </li>
+                                <li>
+                                    <strong>Last Order Date:</strong> {{implant.orders[implant.orders.length - 1].orderDate | date :'MMM d, y'}} 
+                                </li>
+                                <li>
+                                    <strong>Last Order Quantity:</strong> {{implant.orders[implant.orders.length - 1].qty}}
+                                </li>
+                            </ul>
+                            <button ng-click="getRep(implant.rep)">Contact Rep</button>
+                        </ul>
+                        <ul ng-repeat="material in materials track by material._id">
+                        <h2><strong>Materials</strong></h2>
+                            <li ng-click="show = !show">
+                                <strong>Name:</strong> {{material.name}}
+                            </li>
+                            <li>
+                                <strong>On Hand:</strong> {{material.qty}} {{material.qtyType}}
+                            </li>                            
+                            <li>
+                                <strong>Amount to Order:</strong> {{material.minQty - material.qty}} {{material.qtyType}}
+                            </li>
+                            <ul ng-show="show">
+                                <li>
+                                    <strong>Description:</strong> {{material.desc}}
+                                </li>
+                                <li>
+                                    <strong>Min Quantity:</strong> {{material.minQty}} {{material.qtyType}}
+                                </li>
+                                <li>
+                                    <strong>Next Reorder Date:</strong> {{material.nextReorderDate | date : 'MMM d, y'}}
+                                </li>
+                                <li>
+                                    <strong>Reorder Interval:</strong> {{material.reorderInterval}} {{material.intervalType}}
+                                </li>
+                                <li>
+                                    <strong>Last Order Date:</strong> {{material.orders[material.orders.length - 1].orderDate | date :'MMM d, y'}} 
+                                </li>
+                                <li>
+                                    <strong>Last Order Quantity:</strong> {{material.orders[material.orders.length - 1].qty}}
+                                </li>
+                            </ul>
+                            <button ng-click="getRep(material.rep)">Contact Rep</button>
+                        </ul>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                     </div>
                 </div>

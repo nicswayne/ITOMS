@@ -2,62 +2,62 @@ const Rep = require( './Reps' );
 
 module.exports = {
 
-	find( req, res, next ) {
+	find( req, res ) {
 		Rep.find( { } )
 		.populate( `notes`, `date desc body` )
 		.populate( `materials`, `name desc nextReorderDate qty` )
-		.populate( `implants`, `brand size reference onHand nextReorderDate` )
-		.populate( `drugs`, `brand generic strength vialSize onHand nextReorderDate remainingVol` )
+		.populate( `implants`, `brand size reference onHand minOnHand nextReorderDate` )
+		.populate( `drugs` )
 		.exec( ( err, populatedRep ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( populatedRep );
-		})
+		} );
 	},
 
-	findOne( req, res, next ) {
+	findOne( req, res ) {
 		Rep.findById( req.params.id )
 		.populate( `notes`, `date desc body` )
-		.populate( `materials`, `name desc nextReorderDate qty` )
-		.populate( `implants`, `brand size reference onHand nextReorderDate` )
-		.populate( `drugs`, `brand generic strength vialSize onHand nextReorderDate remainingVol` )
+		.populate( `materials` )
+		.populate( `implants`, `brand size reference onHand minOnHand nextReorderDate` )
+		.populate( `drugs` )
 		.exec( ( err, populatedRep ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( populatedRep );
-		})
+		} );
 	},
 
-	update( req, res, next ) {
+	update( req, res ) {
 		Rep.findByIdAndUpdate( req.params.id, req.body, ( err, rep ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( rep );
-		} )
+		} );
 	},
 
-	create( req, res, next ) {
+	create( req, res ) {
 		new Rep( req.body ).save( ( err, newRep ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 201 ).json( newRep );
-		})
+		} );
 	},
 
-	delete( req, res, next ) {
+	delete( req, res ) {
 		Rep.findByIdAndRemove( req.params.id, ( err, deletedRep ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( deletedRep );
-		})
+		} );
 	},
 
-	deleteNote( req, res, next ) {
+	deleteNote( req, res ) {
 		Patient.findById( req.params.PatientId, ( err, patient ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
@@ -71,8 +71,8 @@ module.exports = {
 						return res.status( 500 ).json( err );
 					}
 					return res.status( 200 ).json( deletedNote );
-				})
-			})
-		})
+				} );
+			} );
+		} );
 	}
-}
+};
