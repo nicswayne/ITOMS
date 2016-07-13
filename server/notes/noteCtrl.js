@@ -1,4 +1,6 @@
 const Note = require( './Notes' );
+const Referrals = require( '../referrals/Referrals' );
+const Reps = require( '../reps/Reps' );
 
 module.exports = {
 
@@ -10,7 +12,7 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( populatedNote );
-		})
+		} );
 	},
 
 	findOne( req, res, next ) {
@@ -21,7 +23,7 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( populatedNote );
-		})
+		} );
 	},
 
 	update( req, res, next ) {
@@ -30,16 +32,35 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( note );
-		} )
+		} );
 	},
 
-	create( req, res, next ) {
+	createRef( req, res ) {
 		new Note( req.body ).save( ( err, newNote ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			return res.status( 201 ).json( newNote );
-		})
+			Referrals.findByIdAndUpdate( newNote.refId, { $push: { 'notes': newNote._id } }, ( err, note ) => {
+				if ( err ) {
+					return res.status( 500 ).json( err );
+				}
+				return res.status( 201 ).json( note );
+			} );
+		} );
+	},
+
+	createRep( req, res ) {
+		new Note( req.body ).save( ( err, newNote ) => {
+			if ( err ) {
+				return res.status( 500 ).json( err );
+			}
+			Reps.findByIdAndUpdate( newNote.repId, { $push: { 'notes': newNote._id } }, ( err, note ) => {
+				if ( err ) {
+					return res.status( 500 ).json( err );
+				}
+				return res.status( 201 ).json( note );
+			} );
+		} );
 	},
 
 	delete( req, res, next ) {
@@ -48,7 +69,7 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( deletedNote );
-		})
+		} );
 	}
  
 }

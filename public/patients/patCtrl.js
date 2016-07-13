@@ -14,6 +14,10 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.clear = () => {
+		if( $stateParams.id === `create` ) {
+			$state.go( `patients` );
+			return;
+		}
 		$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
 	};
 

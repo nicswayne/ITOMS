@@ -41,7 +41,7 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 201 ).json( newReferral );
-		})
+		} );
 	},
 
 	delete( req, res, next ) {

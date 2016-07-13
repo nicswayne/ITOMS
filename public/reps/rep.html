@@ -3,15 +3,19 @@
     <home-sidebar></home-sidebar>
 	<navbar-dir></navbar-dir>
         <div id="page-content-wrapper">
-            <div class="container-fluid">
+            <div class="contar-fluid">
                 <div class="row">
                     <div class="col-lg-12">
 						<h2>Rep</h2>
+						<button ng-show="!showUpdateForm" class="btn" ng-click="showUpdateForm = !showUPdateForm">Edit rep info</button>
+                        <br>
+                        <br>
 						<ul>
+						<div ng-show="!showUpdateForm">
 							<li>
 								<strong>Name:</strong> {{rep.name}}
 							</li>
-							<li><strong>Represents:</strong>
+							<li><strong>Represented Company:</strong>
 								<ul ng-repeat="company in rep.companies">
 									<li>
 										{{company}}
@@ -27,16 +31,41 @@
 							<li>
 								<strong>eMail:</strong> {{rep.email}}
 							</li>
+						</div>
+						<form ng-show="showUpdateForm" ng-submit="updateRepInfo( updatedRep )">
+                                <li>
+                                    <strong>Name:</strong> <input type="text" ng-model="updatedRep.name" placeholder="{{rep.name}}">
+                                </li>
+                                <br>
+                                <li>
+                                	<strong>Represented Companies:</strong>  <input type="text" ng-model="updatedRep.companies" placeholder="( e.g. 3i, Zimmer )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Phone:</strong> <input type="text" ng-model="updatedRep.phone" placeholder="{{rep.phone}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Fax:</strong>  <input type="text" ng-model="updatedRep.fax" placeholder="{{rep.fax}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>eMail:</strong> <input type="text" ng-model="updatedRep.email" placeholder="{{rep.email}}">
+                                </li>
+                                <br>
+                                <input class="btn" type="submit" id="submit" value="Save">
+                                <button class="btn" ng-click="clear()">Cancel</button>
+                            </form>
 						</ul>
 						<ul ng-repeat="note in rep.notes"><h3>Notes</h3>
+							<li>
+								<strong>Date:</strong> {{note.date | date : 'mediumDate'}}
+							</li>
 							<li>
 								<strong>Description:</strong> {{notes.desc}}
 							</li>
 							<li>
 								<strong>Note:</strong> {{note.body}}
-							</li>
-							<li>
-								<strong>Date:</strong> {{note.date}}
 							</li>
 						</ul>
 						<ul ng-show="implantShow"><h3>Implants</h3>
@@ -44,7 +73,7 @@
 								<li ng-show="reorderNeeded( implant )">
 									<h4 class="needsReorder">Needs Reorder</h4>
 									<p><strong>Amount to reorder:</strong>  {{amountToReorder( implant )}}</p>
-									<button ng-click="reorder( implant._id )">Reorder</button>
+									<button class="btn" ng-click="reorder( implant._id )">Reorder</button>
 								</li>
 								<br>
 								<li>
@@ -71,14 +100,14 @@
 								<li ng-show="reorderNeeded( drug )">
 									<h4 class="needsReorder">Needs Reorder</h4>
 									<p><strong>Amount to reorder:</strong>  {{amountToReorder( drug )}} vial(s)</p>
-									<button ng-click="reorder( drug._id )">Reorder</button>
+									<button class="btn" ng-click="reorder( drug._id )">Reorder</button>
 								</li>
 								<br>
 								<li>
 									<strong>Brand:</strong> {{drug.brand}}
 								</li>
 								<li>
-									<strong>Generic:</strong> {{drug.generic}}
+									<strong>Gric:</strong> {{drug.gric}}
 								</li>
 								<li>
 									<strong>Strength</strong> {{drug.strength}}
@@ -101,7 +130,7 @@
 								<li ng-show="reorderNeeded( material )">
 									<h4 class="needsReorder">Needs Reorder</h4>
 									<p><strong>Amount to reorder:</strong>  {{amountToReorder( material )}} {{material.qtyType}}</p>
-									<button ng-click="reorder( material._id )">Reorder</button>
+									<button class="btn" ng-click="reorder( material._id )">Reorder</button>
 								</li>
 								<br>
 								<li>

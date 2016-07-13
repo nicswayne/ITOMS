@@ -3,10 +3,11 @@ const updated = require( '../updated/Updated' );
 
 const Notes = new mongoose.Schema( {
 
-	type: { type: String, enum: [ 'Referral', 'Rep' ], required: true },
 	date: { type: Date },
 	desc: { type: String, required: true },
 	body: { type: String, required: true },
+	refId: { type: mongoose.Schema.Types.ObjectId, ref: `Referrals` },
+	repId: { type: mongoose.Schema.Types.ObjectId, ref: `Reps` },
 	updated: updated
 
 } );

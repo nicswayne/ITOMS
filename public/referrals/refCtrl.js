@@ -2,6 +2,10 @@ angular.module( 'ITOMS' )
 .controller( 'refCtrl', function( referralSrv, $scope, $stateParams, $state ) {
 
 	getReferral = ( id ) => {
+		if ( id.id === `create` ) {
+			$scope.showUpdateForm = true;
+			return;
+		}
 		referralSrv.getReferral( id )
 			.then( ( response ) => {
 				console.log( "oneRef", response );
@@ -9,9 +13,39 @@ angular.module( 'ITOMS' )
 			} );
 	};
 
+	$scope.addLocation = ( obj ) => {
+		$scope.oneRef.locations.push( obj );
+		referralSrv.updateReferral( $stateParams.id, $scope.oneRef )
+			.then( ( res ) => {
+				$state.go( $state.current, { 'id': res._id }, { reload: true } );
+			} );
+	};
+
 	$scope.clear = () => {
 		$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
 	};
+
+	$scope.changeShowAddress = () => {
+		$scope.showAddress = !$scope.showAddress;
+	};
+
+	$scope.changeUpdateNote = () => {
+		$scope.updateNote = !$scope.updateNote;
+		$scope.noteDetails = !$scope.noteDetails
+	}
+
+	$scope.createNote = ( obj ) => {
+		if ( !obj.date ) {
+			obj.date = new Date();
+		}
+		obj.refId = $stateParams.id;
+		referralSrv.createNote( obj )
+			.then( res => {
+				$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
+			} );
+	};
+
+	$scope.date = new Date();
 
 	$scope.getPatient = ( id ) => {
 		$state.go( `pat`, { 'id': id } );
@@ -31,6 +65,15 @@ angular.module( 'ITOMS' )
 			} );
 	};
 
+	$scope.updateThisNote = ( id, obj ) => {
+		referralSrv.updateNote( id, obj )
+			.then( ( res ) => {
+				$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
+			} );
+	};
+
 	getReferral( $stateParams );
+	$scope.showAddress = false;
+	$scope.updateNote = false;
 
 } );
