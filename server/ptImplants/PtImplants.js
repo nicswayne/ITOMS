@@ -3,6 +3,7 @@ const updated = require( '../updated/Updated' );
 
 const PtImplants = new mongoose.Schema( {
 
+	patient: { type: mongoose.Schema.Types.ObjectId, ref: `Patients`, required: true },
 	updated: updated,
 	implant: { type: mongoose.Schema.Types.ObjectId, ref: `Implants`, required: true },
 	tooth: { type: Number, min: 1, max: 32 },

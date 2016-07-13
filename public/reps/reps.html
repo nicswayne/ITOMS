@@ -6,7 +6,39 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-
+                        <h2>Reps</h2>
+                        <ul ng-click="getRep( rep._id )" ng-repeat="rep in reps track by rep._id">
+                            <li>
+                                <strong>Name:</strong> {{rep.name}}
+                            </li>
+                            <li><strong>Represents:</strong>
+                                <ul ng-repeat="company in rep.companies">
+                                    <li>
+                                        {{company}}
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Phone:</strong> {{rep.phone}}
+                            </li>
+                            <li>
+                                <strong>Fax:</strong> {{rep.fax}}
+                            </li>
+                            <li>
+                                <strong>eMail:</strong> {{rep.email}}
+                            </li>
+                            <ul ng-repeat="note in rep.notes"><h3>Notes</h3>
+                                <li>
+                                    <strong>Date:</strong> {{note.date | date: 'mediumDate'}}
+                                </li>
+                                <li>
+                                    <strong>Description:</strong> {{notes.desc}}
+                                </li>
+                                <li>
+                                    <strong>Note:</strong> {{note.body}}
+                                </li>                            
+                            </ul>
+                        </ul>
                     </div>
                 </div>
             </div>

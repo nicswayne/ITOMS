@@ -1,20 +1,20 @@
-angular.module('ITOMS')
-.directive('referralSidebar', function(){
-    
+angular.module( 'ITOMS' )
+.directive( 'referralSidebar', function() {
+   
     return {
-        
+       
         templateUrl: './navbar/referralSidebar.html'
         , controller: function( $scope ) {
             $scope.patients = () => {
-                $state.go(`patient`, {
+                $state.go( `pat`, {
                     url: `/patient/:refid/`
-                });
+                } );
             };
             $scope.notes = () => {
-                $state.go(`notes`, {
+                $state.go( `notes`, {
                     url: `/notes/:id`
-                });
+                } );
             };
-        }         
+        }
     };
-});
+} );

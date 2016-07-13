@@ -1,0 +1,90 @@
+<div id="wrapper">
+
+    <home-sidebar></home-sidebar>
+	<navbar-dir></navbar-dir>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div  ng-show="params" class="col-lg-12">
+                        <h1>Update material</h1>
+                        <div>Last updated: {{materialInfo.updated.date | date: 'mediumDate'}} by {{materialInfo.updated.user.userName}}</div>
+                        <form ng-submit="updateMaterialInfo( editMaterial )">
+                            <ul>
+                                <br>
+                                <li>
+                                    <strong>Name:</strong><input type="text" ng-model="editMaterial.name" placeholder="{{materialInfo.name}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Description:</strong><input type="text" ng-model="editMaterial.desc" placeholder="{{materialInfo.desc}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>On Hand:</strong><input type="text" ng-model="editMaterial.onHand" placeholder="{{materialInfo.onHand}}">  <strong>Quantity type:</strong>  <input type="text" ng-model="editMaterial.qtyType" placeholder="( e.g. boxes )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Minimum needed on hand:</strong><input type="text" ng-model="editMaterial.minOnHand" placeholder="{{materialInfo.minOnHand}}"> {{materialInfo.qtyType}}
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Next reorder date:</strong><input type="text" ng-model="editMaterial.nextReorderDate" placeholder="{{materialInfo.nextReorderDate | date: 'shortDate'}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Reorder interval:</strong>  <input type="text" ng-model="editMaterial.reorderInterval" placeholder="{{materialInfo.reorderInterval}}">  <strong>Interval type:</strong>  <input type="text" ng-model="editMaterial.intervalType" placeholder="{{materialInfo.intervalType}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Rep:</strong> <input type="text" placeholder="{{materialInfo.rep.name}}">
+                                </li>
+                                <br>
+                            </ul>
+                            <input type="submit" id="submit" value="Save">
+                        </form>
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
+                </div>
+                <div  ng-show="!params" class="col-lg-12">
+                        <h1>Create material</h1>
+                        <form ng-submit="createMaterial( newMaterial )">
+                            <ul>
+                                <br>
+                                <li>
+                                    <strong>name:</strong>  <input type="text" ng-model="newMaterial.name" placeholder="( e.g. Gauze )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Description:</strong>  <input type="text" ng-model="newMaterial.desc" placeholder="( e.g. 5 x 5 gauze pads )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>On Hand:</strong>  <input type="text" ng-model="newMaterial.onHand" placeholder="( e.g. 32 )">  <strong>Quantity type:</strong>  <input type="text" ng-model="newMaterial.qtyType" placeholder="( e.g. boxes )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Minimum needed on hand:</strong>  <input type="text" ng-model="newMaterial.minOnHand" placeholder="( e.g. 10 )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Next reorder date:</strong>  <input type="text" ng-model="newMaterial.nextReorderDate" placeholder="( e.g. 2/13/2017 )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Reorder interval:</strong>  <input type="text" ng-model="newMaterial.reorderInterval" placeholder="( e.g. 14 )">  <strong>Interval type:</strong>  <input type="text" ng-model="newMaterial.intervalType" placeholder="( e.g. days)">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Rep:</strong> <input type="text" placeholder="">
+                                </li>
+                                <br>
+                            </ul>
+                            <input type="submit" id="submit" value="Save">
+                        </form>
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>

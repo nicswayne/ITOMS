@@ -1,30 +1,30 @@
 const Patient = require( './Patients' );
 const Drugs = require( '../drugs/Drugs' );
 const Implants = require( '../implants/Implants' );
+const Users = require( '../Users/User' );
 
 module.exports = {
 
 	find( req, res ) {
 		Patient.find( { } )
 		.populate( `referral`, `firstName lastName suffix practiceName phone fax email active` )
-		.populate( `implants`, `implant lot insertionDate referral tooth` )
+		.populate( `implants`, `brand size lot insertionDate` )
 		.populate( `drugs` )
 		.exec( ( err, ptDrug ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
 			Drugs.populate( ptDrug, {
-				path: `drugs.drug`
-				,	select: `brand generic vialType`
+				path: `drugs.drug`,
+				select: `brand generic vialType`
 			}, ( err, populatedPtDrug ) => {
 				if ( err ) {
 					return res.status( 500 ).json( err );
 				}
 				Implants.populate( populatedPtDrug, {
-					path: `implants.implant`
-					, select: `brand size`
-				}
-				, ( err, populatedPtImplant ) => {
+					path: `implants.implant`,
+					select: `brand size`
+				}, ( err, populatedPtImplant ) => {
 					if ( err ) {
 						return res.status( 500 ).json( err );
 					}
@@ -37,7 +37,7 @@ module.exports = {
 	, findOne( req, res ) {
 		Patient.findById( req.params.id )
 		.populate( `referral`, `firstName lastName suffix practiceName phone fax email active` )
-		.populate( `implants`, `implant lot insertionDate referral tooth` )
+		.populate( `implants` )
 		.populate( `drugs` )
 		.exec( ( err, ptDrug ) => {
 			if ( err ) {

@@ -1,1 +1,59 @@
-<h1>Implants Page</h1>
+<div id="wrapper">
+
+    <home-sidebar></home-sidebar>
+	<navbar-dir></navbar-dir>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+						<h1>Implants</h1>
+                        <button ng-click="goToCreateImplant()">Create Implant</button>
+                        <hr>
+                        <div ng-repeat="implant in allImplants | orderBy: 'brand' track by implant._id">
+                            <ul>
+                                <li ng-show="implant.needsReorder">
+                                    <h3><strong>Reorder at least {{implant.reorderAmount}}!</strong></h3>
+                                </li>
+                                <li>
+                                    <strong>Brand:</strong> {{implant.brand}}
+                                </li>
+                                <li>
+                                    <strong>Size:</strong> {{implant.size}}
+                                </li>
+                                <li>
+                                    <strong>Referrence #</strong> {{implant.reference}}
+                                </li>
+                                <li>
+                                    <strong>On Hand:</strong> {{implant.onHand}}
+                                </li>
+                                <li>
+                                    <strong>Minimum needed on hand:</strong> {{implant.minOnHand}}
+                                </li>
+                                <li>
+                                    <strong>Rep:</strong> {{implant.rep.name}}
+                                </li>
+                                <li>
+                                    <strong>Last updated</strong> {{implant.updated.date | date: 'mediumDate'}}
+                                </li>
+                                <ul ng-repeat="order in implant.orders" ng-click="orderShow = !orderShow"><strong>Orders</strong><span class="caret"></span>
+                                    <div ng-show="orderShow">
+                                        <li>
+                                            <strong>Order:</strong> {{order.orderDate}}
+                                        </li>
+                                        <li>
+                                            <strong>Order amount:</strong> {{order.qty}}
+                                        </li>
+                                    </div>
+                                </ul>
+                                <br>
+                                <button>Reorder</button>
+                                <button ng-click="goToUpdateImplant( implant._id )">Update</button>
+                            </ul>
+                        <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>

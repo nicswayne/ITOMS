@@ -1,2 +1,57 @@
+<div id="wrapper">
 
-<h1>Referrals Page</h1>
+    <home-sidebar></home-sidebar>
+	<navbar-dir></navbar-dir>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+						<h1>Referrals</h1>
+                        <button class="btn" ng-click="goToNewReferral()">Add new referral</button>
+                        <br>
+                        <br>
+                        <ul ng-repeat="referral in allReferrals track by referral._id">
+                            <li>
+                                <strong>Name:</strong> Dr. {{referral.firstName + ' ' + referral.lastName + ' ' + referral.suffix}}
+                            </li>
+                            <li>
+                            	<strong>Number of referrals:</strong> {{referral.patients.length}}
+                            </li>
+                            <li ng-click="show = !show"><strong>Practice:</strong> {{referral.practiceName}} <span class="caret"></span>
+                            </li>
+                            <div ng-show="show">
+                                <li><strong>Address(es)</strong>
+                                    <ul ng-repeat="address in referral.locations">
+                                        <li>
+                                            <strong>Location name:</strong> {{address.locationName}}
+                                        </li>
+                                        <li>
+                                            {{address.address}}
+                                        </li>
+                                        <li>
+                                            {{address.city}}, {{address.city}} {{address.zip}}
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Phone:</strong> {{referral.phone}}
+                                </li>
+                                <li>
+                                    <strong>Fax:</strong> {{referral.fax}}
+                                </li>
+                                <li>
+                                    <strong>eMail:</strong> {{referral.email}}
+                                </li>
+                                <div>
+                                    <h4><strong>{{referral.notes.length}} note(s)</strong></h4>
+                                </div>
+                            </div> 
+                            <br>
+                            <button class="btn" ng-click="goToReferral( referral._id )">Go to referral</button>                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>

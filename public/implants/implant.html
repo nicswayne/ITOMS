@@ -5,11 +5,80 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Implant Info Page</h1>
+                    <div  ng-show="params" class="col-lg-12">
+                        <h1>Update Implant</h1>
+                        <div>Last updated: {{implantInfo.updated.date | date: 'mediumDate'}}</div>
+                        <form ng-submit="updateImplantInfo( editImp )">
+                            <ul>
+                            <br>
+                                <li>
+                                    <strong>Brand:</strong><input type="text" ng-model="editImp.brand" placeholder="{{implantInfo.brand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Size:</strong><input type="text" ng-model="editImp.size" placeholder="{{implantInfo.size}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>On Hand:</strong><input type="text" ng-model="editImp.onHand" placeholder="{{implantInfo.onHand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Minimum needed on hand:</strong><input type="text" ng-model="editImp.minOnHand" placeholder="{{implantInfo.minOnHand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Next reorder date:</strong><input type="text" ng-model="editImp.nextReorderDate" placeholder="{{implantInfo.nextReorderDate | date: 'shortDate'}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Rep:</strong> <input type="text" placeholder="{{implantInfo.rep.name}}">
+                                </li>
+                                <br>
+                            </ul>
+                            <input type="submit" id="submit" value="Submit">
+                        </form>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                     </div>
                 </div>
+                <div  ng-show="!params" class="col-lg-12">
+                        <h1>Create Implant</h1>
+                        <form ng-submit="createImplant( newImp )">
+                            <ul>
+                            <br>
+                                <li>
+                                    <strong>Brand:</strong><input type="text" ng-model="newImp.brand" placeholder="{{implantInfo.brand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Size:</strong><input type="text" ng-model="newImp.size" placeholder="{{implantInfo.size}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Reference:</strong><input type="text" ng-model="newImp.reference" placeholder="{{implantInfo.reference}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>On Hand:</strong><input type="text" ng-model="newImp.onHand" placeholder="{{implantInfo.onHand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Minimum needed on hand:</strong><input type="text" ng-model="newImp.minOnHand" placeholder="{{implantInfo.minOnHand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Next reorder date:</strong><input type="text" ng-model="newImp.nextReorderDate" placeholder="{{implantInfo.nextReorderDate | date: 'shortDate'}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Rep:</strong> <input type="text" placeholder="{{implantInfo.rep.name}}">
+                                </li>
+                                <br>
+                            </ul>
+                            <input type="submit" id="submit" value="Submit">
+                        </form>
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
             </div>
         </div>
         <!-- /#page-content-wrapper -->

@@ -10,6 +10,7 @@ const Materials = new mongoose.Schema( {
 	minOnHand: { type: Number },
 	reorderInterval: { type: Number },
 	intervalType: { type: String, enum: [ `days`, `weeks`, `months`, `years` ] },
+	intervalQty: { type: Number },
 	nextReorderDate: { type: Date },
 	rep: { type: mongoose.Schema.Types.ObjectId, ref: `Reps` },
 	orders: [ { type: mongoose.Schema.Types.ObjectId, ref: `Orders` } ],
@@ -20,4 +21,4 @@ const Materials = new mongoose.Schema( {
 
 module.exports = mongoose.model( 'Materials', Materials );
 
-// linked to inventory
+// linked to inventory and rep

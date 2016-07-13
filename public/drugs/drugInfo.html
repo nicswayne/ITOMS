@@ -1,0 +1,115 @@
+<div id="wrapper">
+
+    <home-sidebar></home-sidebar>
+	<navbar-dir></navbar-dir>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div  ng-show="params" class="col-lg-12">
+                        <h1>Update Drug</h1>
+                        <div>Last updated: {{drugInfo.updated.date | date: 'mediumDate'}}</div>
+                        <form ng-submit="updateDrugInfo( editDrug )">
+                            <ul>
+                                <br>
+                                <li>
+                                    <strong>Brand:</strong><input type="text" ng-model="editDrug.brand" placeholder="{{drugInfo.brand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Generic:</strong><input type="text" ng-model="editDrug.generic" placeholder="{{drugInfo.generic}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Strength:</strong><input type="text" ng-model="editDrug.strength" placeholder="{{drugInfo.strength}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>On Hand:</strong><input type="text" ng-model="editDrug.onHand" placeholder="{{drugInfo.onHand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Remaining volume:</strong><input type="text" ng-model="editDrug.remainingVol" placeholder="{{drugInfo.remainingVol}} {{drugInfo.vialType}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Vial size:</strong><input type="text" ng-model="editDrug.vialSize" placeholder="{{drugInfo.vialSize}} {{drugInfo.vialType}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Vial Type:</strong><input type="text" ng-model="editDrug.vialType" placeholder="{{drugInfo.vialType}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>On Hand:</strong><input type="text" ng-model="editDrug.onHand" placeholder="{{drugInfo.onHand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Minimum needed on hand:</strong><input type="text" ng-model="editDrug.minOnHand" placeholder="{{drugInfo.minOnHand}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Next reorder date:</strong><input type="text" ng-model="editDrug.nextReorderDate" placeholder="{{drugInfo.nextReorderDate | date: 'shortDate'}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Rep:</strong> <input type="text" placeholder="{{drugInfo.rep.name}}">
+                                </li>
+                                <br>
+                            </ul>
+                            <input type="submit" id="submit" value="Save">
+                        </form>
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
+                </div>
+                <div  ng-show="!params" class="col-lg-12">
+                        <h1>Create Drug</h1>
+                        <form ng-submit="createDrug( newDrug )">
+                            <ul>
+                                <br>
+                                <li>
+                                    <strong>Brand:</strong>  <input type="text" ng-model="newDrug.brand" placeholder="( e.g. Versed )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Generic:</strong>  <input type="text" ng-model="newDrug.generic" placeholder="( e.g. Midazolam )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Strength:</strong>  <input type="text" ng-model="newDrug.strength" placeholder="( e.g. 5mg/ml )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Vial size:</strong>  <input type="text" ng-model="newDrug.vialSize" placeholder="( e.g. 1 )">
+                                    <strong>Vial Type:</strong>  <input type="text" ng-model="newDrug.vialType" placeholder="( e.g. ml )"
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>On Hand:</strong>  <input type="text" ng-model="newDrug.onHand" placeholder="( e.g. 12 )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Remaining volume:</strong>  <input type="text" ng-model="newDrug.remainingVol" placeholder="(  e.g. 10 )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Minimum needed on hand:</strong>  <input type="text" ng-model="newDrug.minOnHand" placeholder="( e.g. 10 )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Next reorder date:</strong>  <input type="text" ng-model="newDrug.nextReorderDate" placeholder="( e.g. 2/13/2017 )">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Rep:</strong> <input type="text" placeholder="">
+                                </li>
+                                <br>
+                            </ul>
+                            <input type="submit" id="submit" value="Save">
+                        </form>
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>

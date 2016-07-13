@@ -6,7 +6,122 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Referral Info Page</h1>
+                        <h1>Referral</h1>{{test}}
+                        <button ng-show="!showUpdateForm" class="btn" ng-click="$scope.showUpdateForm = !$scope.showUPdateForm">Edit referral info</button>
+                        <br>
+                        <br>
+                        <ul>
+                        <div ng-show="!showUpdateForm">
+                            <li>
+                                <strong>Name:</strong> Dr. {{ oneRef.firstName }} <!-- + ' ' + --> {{ oneRef.lastName + ' ' + oneRef.suffix }}
+                            </li>
+                            <li>
+                                <strong>Practice:</strong> {{oneRef.practiceName}}
+                            </li>
+                            <div ng-show="!showAddress">
+                                <li><strong>Addresses</strong>
+                                    <button ng-click="showAddress = !showAddress">Edit location info</button>
+                                    <ul ng-repeat="address in oneRef.locations">
+                                        <li>
+                                            <strong>{{address.locationName}}</strong>
+                                        </li>
+                                        <li>
+                                            {{address.address}}
+                                        </li>
+                                        <li>
+                                            {{address.city}}, {{address.state}} {{address.zip}}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </div>
+                            <div ng-show="showAddress">
+                                <form ng-submit="updateLocationInfo( updateLocation )"><strong>Address</strong>
+                                    <ul ng-repeat="location in oneRef.locations track by location._id">
+                                        <li><strong>Location Name:</strong>  <input type="text" ng-model="updateLocation.locationName" placeholder="location.locationName">
+                                        </li>
+                                        <br>
+                                        <li>
+                                            <strong>Street:</strong>  <input type="text" ng-model="updateLocation.address" placeholder="{{location.address}}">
+                                        </li>
+                                        <br>
+                                        <li>
+                                            <strong>City:</strong>  <input type="text" ng-model="updateLocation.city" placeholder="{{location.city}}"> <strong>State:</strong>  <input type="text" ng-model="updateLocation.state" placeholder="{{location.state}}"> <strong>Zipcode:</strong>  <input type="text" ng-model="updateLocation.zip" placeholder="{{location.zip}}">
+                                        </li>
+                                        <br>
+                                    </ul>
+                                    <input class="btn" type="submit" id="submit" value="Save">
+                                    <button class="btn" ng-click="clear()">Cancel</button>
+                                </form>
+                            </div>
+                            <li>
+                                <strong>Phone:</strong> {{oneRef.phone}}
+                            </li>
+                            <li>
+                                <strong>Fax:</strong> {{oneRef.fax}}
+                            </li>
+                            <li>
+                                <strong>eMail:</strong> {{oneRef.email}}
+                            </li>
+                            <ul ng-repeat="note in oneRef.notes"><h3>Notes</h3>
+                                <li>
+                                    <strong>Date:</strong> {{note.date | date: 'mediumDate'}}
+                                </li>
+                                <li ng-click="noteDetails = !noteDetails">
+                                    <strong>Description:</strong> {{note.desc}} <span class="caret"></span>
+                                </li>
+                                <li ng-show="noteDetails">
+                                    <strong>Note:</strong> {{note.body}}
+                                </li>                            
+                            </ul>
+                            <ul ng-click="getPatient( patient._id )" ng-repeat="patient in oneRef.patients track by patient._id"><h3>Patients:</h3>
+                                <li>
+                                    <strong>Name:</strong> <a>{{patient.firstName}} {{patient.lastName}}</a>
+                                </li>
+                                <li>
+                                    <strong>DoB:</strong> {{patient.DOB | date : 'mediumDate'}}
+                                </li>
+                                <li>
+                                    <strong>SSN:</strong> {{patient.ssn}}
+                                </li>
+                                <li>
+                                    <strong>Number of implants</strong> {{patient.implants.length}}
+                                </li>
+                            </ul>
+                            </div>
+                            <form ng-show="showUpdateForm" ng-submit="updateReferralInfo( updateRef )">
+                                <li>
+                                    <strong>First name:</strong> <input type="text" ng-model="updateRef.firstName" placeholder="{{oneRef.firstName}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Last name:</strong> <input type="text" ng-model="updateRef.lastName" placeholder="{{oneRef.lastName}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Suffix:</strong> <input type="text" ng-model="updatedRef.suffix" placeholder="oneRef.suffix">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Practice name:</strong> <input type="text" ng-model="updateRef.practiceName" placeholder="{{oneRef.practiceName}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Phone:</strong> <input type="text" ng-model="updateRef.phone" placeholder="{{oneRef.phone}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Fax:</strong>  <input type="text" ng-model="updateRef.fax" placeholder="{{oneRef.fax}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>eMail:</strong> <input type="text" ng-model="updateRef.email" placeholder="{{oneRef.email}}">
+                                </li>
+                                <br>
+                                <input class="btn" type="submit" id="submit" value="Save">
+                                <button class="btn" ng-click="clear()">Cancel</button>
+                            </form>
+                        </ul>
+
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                     </div>
                 </div>

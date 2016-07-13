@@ -1,16 +1,8 @@
 angular.module( 'ITOMS' )
-.controller( 'repCtrl', function( $scope, repSrv, $stateParams ) {
+.controller( 'repCtrl', function( $scope, repSrv, $stateParams, $state ) {
 
-	 getRep = ( id ) => {
-		repSrv.getOneRep( id )
-			.then( ( res ) => {		
-				$scope.implantShow = res.implants.length !== 0;
-				$scope.drugShow = res.drugs.length !== 0;
-				$scope.materialShow = res.materials.length !== 0;
-				$scope.rep = res;
-				console.log( "res", res );
-			}
-		);
+	 $scope.getRep = ( id ) => {
+		$state.go( `rep`, { 'id': id } );
 	 };
 
 	 getAllReps = () => {
@@ -21,7 +13,6 @@ angular.module( 'ITOMS' )
 	 };
 
 	 getAllReps();
-	 getRep( $stateParams );
 
 	 $scope.reorderNeeded = function( item ) {
 		return item.onHand < item.minOnHand;

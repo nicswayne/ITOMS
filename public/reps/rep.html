@@ -89,6 +89,9 @@
 								<li>
 									<strong>Minimum needed on hand:</strong> {{drug.minOnHand + ' vial(s)'}}
 								</li>
+								<li>
+                                    <strong>Next reorder date:</strong> {{drug.nextReorderDate | date : 'MMM d, y'}}
+                                </li>
 								<hr>
 								<br>
 							</ul>
@@ -113,11 +116,13 @@
 								<li>
 									<strong>Minimum needed on hand:</strong> {{material.minOnHand + ' ' + material.qtyType}}
 								</li>
+								<li>
+									<strong>Next Reorder Date:</strong> {{material.nextReorderDate | date: 'mediumDate'}}
+								</li>
 								<hr>
 								<br>
 							</ul>
 						</ul>
-
                     </div>
                 </div>
             </div>

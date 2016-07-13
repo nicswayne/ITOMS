@@ -1,0 +1,203 @@
+<div id="wrapper">
+
+    <patient-sidebar></patient-sidebar>
+    <navbar-dir></navbar-dir>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Patient</h1>
+                        <button ng-show="!showUpdateForm" class="btn" ng-click="showUpdateForm = !showUpdateForm">Edit patient info</button>
+                        <br>
+                        <br>
+                        <ul>
+                            <div ng-show="!showUpdateForm">
+                                <li>
+                                    <strong>Name:</strong> {{ patient.firstName + ' ' + patient.lastName }}
+                                </li>
+                                <li>
+                                    <strong>Gender:</strong> {{patient.gender}}
+                                </li>
+                                <li>
+                                    <strong>DoB:</strong> {{patient.DOB | date : 'mediumDate'}}
+                                </li>
+                                <li>
+                                    <strong>SSN:</strong> {{patient.ssn}}
+                                </li>
+                                <li><strong>Address</strong>
+                                    <ul>
+                                        <li>
+                                            {{patient.address}}
+                                        </li>
+                                        <li>
+                                            {{patient.city}}, {{patient.state}} {{patient.zip}}
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Phone:</strong> {{patient.phone}}
+                                    <span ng-show="patient.leaveMessageOK"><strong>Okay to leave message!</strong></span>
+                                </li>
+                                <li ng-show="patient.callCellOK">
+                                    <strong>Cell phone:</strong>  {{patient.cellPhone}} <strong>Okay to contact on cellphone!</strong>
+                                </li>
+                                <li>
+                                    <strong>Work phone:</strong> {{patient.workPhone}} <span ng-show="patient.callWorkOK"><strong>Okay to contact at work!</strong></span>
+                                </li>
+                                <li>
+                                    <strong>eMail:</strong> {{patient.email}}
+                                </li>
+                            </div>
+                            <form ng-show="showUpdateForm" ng-submit="updatePatientInfo( updatePat )">
+                                <li>
+                                    <strong>First name:</strong> <input type="text" ng-model="updatePat.firstName" placeholder="{{patient.firstName}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Last name:</strong> <input type="text" ng-model="updatePat.lastName" placeholder="{{patient.lastName}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Gender:</strong> <input type="text" ng-model="updatePat.gender" placeholder="{{patient.gender}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>DoB:</strong> <input type="text" ng-model="updatePat.DOB" placeholder="{{patient.DOB | date : 'mediumDate'}}">
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>SSN:</strong> <input type="text" ng-model="updatePat.ssn" placeholder="{{patient.ssn}}">
+                                </li>
+                                <br>
+                                <li><strong>Address</strong>
+                                    <ul>
+                                        <li>
+                                            <strong>Street:</strong>  <input type="text" ng-model="updatePat.address" placeholder="{{patient.address}}">
+                                        </li>
+                                        <br>
+                                        <li>
+                                            <strong>City:</strong>  <input type="text" ng-model="updatePat.city" placeholder="{{patient.city}}"> <strong>State:</strong>  <input type="text" ng-model="updatePat.state" placeholder="{{patient.state}}"> <strong>Zipcode:</strong>  <input type="text" ng-model="updatePat.zip" placeholder="{{patient.zip}}">
+                                        </li>
+                                        <br>
+                                    </ul>
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Phone:</strong> <input type="text" ng-model="updatePat.phone" placeholder="{{patient.phone}}">
+                                    <span ng-show="patient.leaveMessageOK"><strong>Okay to leave message!</strong></span>
+                                </li>
+                                <br>
+                                <li ng-show="patient.callCellOK">
+                                    <strong>Cell phone:</strong>  <input type="text" ng-model="updatePat.cellPhone" placeholder="{{patient.cellPhone}}"> <strong>Okay to contact on cellphone!</strong>
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>Work phone:</strong> <input type="text" ng-model="updatePat.workPhone" placeholder="{{patient.workPhone}}"> <span ng-show="patient.callWorkOK"><strong>Okay to contact at work!</strong></span>
+                                </li>
+                                <br>
+                                <li>
+                                    <strong>eMail:</strong> <input type="text" ng-model="updatePat.email" placeholder="{{patient.email}}">
+                                </li>
+                                <br>
+                                <input class="btn" type="submit" id="submit" value="Save">
+                                <button class="btn" ng-click="clear()">Cancel</button>
+                            </form>
+                            <ul ng-repeat="ref in patient.referral track by ref._id"><h3>{{patient.referral.length}} Referral(s):</h3>
+                            <button class="btn">Add new referral</button>
+                            <button class="btn">Add existing referral</button>
+                            <br>
+                            <br>
+                                <li ng-click="getReferral( ref._id )" >
+                                    <strong>Name:</strong> <a>Dr. {{ref.firstName + ' ' + ref.lastName + ' ' + ref.suffix }}</a>
+                                </li>
+                            </ul>
+
+                            <ul ng-repeat="implant in patient.implants track by implant._id"><h3>{{patient.implants.length}} Implant(s):</h3>
+                                <li ng-click="show = !show">
+                                    <strong>Insertion date:</strong> {{implant.insertionDate | date : 'mediumDate'}} <span class="caret"></span>
+                                </li>
+                                <div ng-show="show">
+                                    <li>
+                                        <strong>Brand:</strong> {{implant.implant.brand}}
+                                    </li>
+                                    <li>
+                                        <strong>Size:</strong> {{implant.implant.size}}
+                                    </li>
+                                    <li>
+                                        <strong>Lot:</strong> {{implant.lot}}
+                                    </li>
+                                    <li>
+                                        <strong>Tooth #</strong> {{implant.tooth}}
+                                    </li>
+                                    <div>
+                                        <button ng-click="details = !details" ng-show="!details">Details</button>
+                                        <button>Edit</button>
+                                        <ul ng-show="details" ng-click="details = !details">
+                                            <li>
+                                                <strong>Removal date:</strong> {{implant.removalDate}}
+                                            </li>
+                                            <li>
+                                                <strong>Prosthetic placement date:</strong> {{implant.prostheticDate}}
+                                            </li>
+                                            <li>
+                                                <strong>Healing abutment placement date:</strong> {{implant.healingAbutmentDate}}
+                                            </li>
+                                            <li>
+                                                <strong>Bone quantity:</strong> {{implant.boneQty}}
+                                            </li>
+                                            <li>
+                                                <strong>Bone quality:</strong> {{implant.boneQlty}}
+                                            </li>
+                                            <li>
+                                                <strong>Bone Status:</strong> {{implant.boneStatus}}
+                                            </li>
+                                            <li>
+                                                Last update date: {{implant.updated.date | date : 'medium' }}
+                                            </li>
+                                            <!-- <li>
+                                                {{"last updated by" + updateUser}}
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ul>
+                            <ul ng-repeat="drug in patient.drugs track by drug._id"><h3>{{patient.drugs.length}} Drug(s)</h3>
+                                <li ng-click="show = !show">
+                                    <strong>Date:</strong> {{drug.date | date : 'mediumDate'}} <span class="caret"></span>
+                                </li>
+                                <div ng-show="show">
+                                    <li>
+                                        <strong>Brand:</strong> {{drug.drug.brand}}
+                                    </li>
+                                    <li>
+                                        <strong>Generic:</strong> {{drug.drug.generic}}
+                                    </li>
+                                    <li>
+                                        <strong>Amount Used:</strong> {{drug.volumeUsed + ' ' + drug.drug.vialType}}
+                                    </li>
+                                    <li>
+                                        <strong>Amount Wasted</strong> {{drug.volumeWasted + ' ' + drug.drug.vialType}}
+                                    </li>
+                                    <div>
+                                        <button ng-click="details = !details" ng-show="!details">Details</button>
+                                        <button ng-click="updateDrug( drug._id )">Edit</button>
+                                        <ul ng-show="details" ng-click="details = !details">
+                                            <li>
+                                                Last update date: {{drug.updated.date | date : 'medium' }}
+                                            </li>
+                                            <!-- <li>
+                                                {{"last updated by" + updateUser}}
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ul>
+                        </ul>
+
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>

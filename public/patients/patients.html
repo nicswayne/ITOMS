@@ -1,1 +1,61 @@
-<h1>Patients Page</h1>
+<div id="wrapper">
+
+    <patient-sidebar></patient-sidebar>
+    <navbar-dir></navbar-dir>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Patients</h1>
+                        <button class="btn" ng-click="goToNewPatient()">Add new patient</button>
+                        <br>
+                        <br>
+                        <ul ng-repeat="patient in patients">
+                           <li ng-click="patDetails = !patDetails">
+                                <strong>Name:</strong> {{ patient.firstName + ' ' + patient.lastName }} <span class="caret"></span>
+                            </li>
+                            <div ng-click="goToPatient( patient._id )">
+                                <li>
+                                    <strong>DoB:</strong> {{patient.DOB | date : 'mediumDate'}}
+                                </li>
+                                <div ng-show="patDetails">
+                                    <li><strong>Address</strong>
+                                        <ul>
+                                            <li>
+                                                {{patient.address}}
+                                            </li>
+                                            <li>
+                                                {{patient.city}}, {{patient.city}} {{patient.zip}}
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>Phone:</strong> {{patient.phone}}
+                                    </li>
+                                    <li>
+                                        <strong>eMail:</strong> {{patient.email}}
+                                    </li>                                    
+                                    <li>
+                                        <strong>SSN:</strong> {{patient.ssn}}
+                                    </li>
+                                </div>
+                            </div>
+                            <div>
+                                <ul ng-click="getReferral( ref._id )" ng-repeat="ref in patient.referral track by ref._id"><h4>{{patient.referral.length}} Referral(s),  <span>{{patient.implants.length}} Implant(s),</span>  <span>{{patient.drugs.length}} Drug(s) </span></h4>
+                                    <li>
+                                        <strong>Name:</strong> <a>Dr. {{ref.firstName + ' ' + ref.lastName + ' ' + ref.suffix }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <br>
+                            <button class="btn" ng-click="goToPatient( patient._id )">Go to patient</button>
+                        <hr>
+                        </ul>
+
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>
