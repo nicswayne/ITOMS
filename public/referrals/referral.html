@@ -121,63 +121,66 @@
                                     <button ng-show="!showAddress" class="btn" ng-click="showAddress = !showAddress">Edit location info</button>
                                 </ul>
                             </div>
-                            <hr>
-                            <button ng-click="noteShow = !noteShow" class="btn">Add note</button>
                             <br>
-                            <h3>Notes</h3>
-                            <ul ng-repeat="note in oneRef.notes">
-                                <div ng-show="!noteShow">
-                                    <li>
-                                        <strong>Date:</strong> {{note.date | date: 'mediumDate'}}
-                                    </li>
-                                    <li ng-click="noteDetails = !noteDetails">
-                                        <strong>Description:</strong> {{note.desc}} <span class="caret"></span>
-                                    </li>
-                                    <li ng-show="noteDetails">
-                                        <strong>Note:</strong> {{note.body}}
-                                    </li>
-                                    <button class="btn" ng-show="!updateNote" ng-click="changeUpdateNote()">Edit note:</button>
-                                    <br>
-                                </div>
-                                <div ng-show="updateNote">
-                                    <form ng-submit="updateThisNote( note._id, updatedNote )">
-                                        <ul>
-                                            <li>
-                                                <strong>Date:</strong> <input type="text" placeholder="{{note.date | date : 'shortDate'}}" ng-model="updatedNote.date">
-                                            </li>
-                                            <br>
-                                            <li>
-                                                <strong>Description:</strong> <input type="text" ng-model="updatedNote.desc" placeholder="{{note.desc}}">
-                                            </li>
-                                            <br>
-                                            <li>
-                                                <strong>Note:</strong> <input type="text" ng-model="updatedNote.body" placeholder="{{note.body}}">
-                                            </li>
-                                            <br>
-                                            <input type="submit" id="submit" value="Save" class="btn">
-                                            <button class="btn" ng-click="clear()">Cancel</button>
-                                        </ul>
-                                    </form>
-                                </div>
-                            </ul>
-                            <form ng-show="noteShow" ng-submit="createNote( newNote )">
-                                <ul>
-                                    <li>
-                                        <strong>Date:</strong> <input type="text" placeholder="{{date | date : 'shortDate'}}" ng-model="newNote.date">
-                                    </li>
-                                    <br>
-                                    <li>
-                                        <strong>Description:</strong> <input type="text" ng-model="newNote.desc">
-                                    </li>
-                                    <br>
-                                    <li>
-                                        <strong>Note:</strong> <input type="text" ng-model="newNote.body">
-                                    </li>
-                                    <br>
+                            <hr>
+                            <div ng-show="!noteUpdateShow">
+                                <button  ng-show="!noteShow" ng-click="noteShow = !noteShow" class="btn">Add note</button>
+                                <form ng-show="noteShow" ng-submit="createNote( newNote )"><h3>New note</h3>
+                                    <ul>
+                                        <li>
+                                            <strong>Date:</strong> <input type="text" placeholder="{{date | date : 'shortDate'}}" ng-model="newNote.date">
+                                        </li>
+                                        <br>
+                                        <li>
+                                            <strong>Description:</strong> <input type="text" ng-model="newNote.desc">
+                                        </li>
+                                        <br>
+                                        <li>
+                                            <strong>Note:</strong> <input type="text" ng-model="newNote.body">
+                                        </li>
+                                        <br>
+                                    </ul>
                                     <input type="submit" id="submit" value="Save" class="btn">
                                     <button class="btn" ng-click="clear()">Cancel</button>
+                                </form>
+                            </div>
+                            <h3>Notes</h3>
+                            <div>
+                                <ul ng-repeat="note in oneRef.notes">
+                                    <div>
+                                        <li>
+                                            <strong>Date:</strong> {{note.date | date: 'mediumDate'}}
+                                        </li>
+                                        <li ng-click="noteDetails = !noteDetails">
+                                            <strong>Description:</strong> {{note.desc}} <span class="caret"></span>
+                                        </li>
+                                        <li ng-show="noteDetails">
+                                            <strong>Note:</strong> {{note.body}}
+                                        </li>
+                                        <br>
+                                    </div>
+                                    <div ng-show="noteUpdateShow">
+                                        <form ng-submit="updateThisNote( note._id, updatedNote )">
+                                            <ul>
+                                                <li>
+                                                    <strong>Date:</strong> <input type="text" placeholder="{{note.date | date : 'shortDate'}}" ng-model="updatedNote.date">
+                                                </li>
+                                                <br>
+                                                <li>
+                                                    <strong>Description:</strong> <input type="text" ng-model="updatedNote.desc" placeholder="{{note.desc}}">
+                                                </li>
+                                                <br>
+                                                <li>
+                                                    <strong>Note:</strong> <input type="text" ng-model="updatedNote.body" placeholder="{{note.body}}">
+                                                </li>
+                                                <br>
+                                                <input type="submit" id="submit" value="Save" class="btn">
+                                                <button class="btn" ng-click="clear()">Cancel</button>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                    <button ng-show="!noteUpdateShow" class="btn" ng-click="noteUpdateShow = !noteUpdateShow">Edit note</button>
                                 </ul>
-                            </form>
                             <hr>
                             <ul ng-click="getPatient( patient._id )" ng-repeat="patient in oneRef.patients track by patient._id"><h3>Patients:</h3>
                                 <li>
