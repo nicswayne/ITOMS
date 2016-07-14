@@ -1,4 +1,5 @@
 const mongoose = require( 'mongoose' );
+const bcrypt = require( 'bcrypt-nodejs' );
 
 const User = mongoose.Schema( {
 
@@ -30,8 +31,23 @@ const User = mongoose.Schema( {
 	updatePtImplant: { type: Boolean, required: true },
 	updatePtBoneGraft: { type: Boolean, required: true },
 	mergePatient: { type: Boolean, required: true },
-	mergeReferrals: { type: Boolean, required: true }
+	mergeReferrals: { type: Boolean, required: true },
+	createPatient: { type: Boolean, required: true },
+	createReferral: { type: Boolean, required: true },
+	createRep: { type: Boolean, required: true },
+	createDrug: { type: Boolean, required: true },
+	createMaterial: { type: Boolean, required: true },
+	createImplant: { type: Boolean, required: true },
+	createNote: { type: Boolean, required: true }
 
 } );
+
+User.methods.generateHash = ( password ) => {
+	return bycrypt.hashSync( password, bycrypt.genSaltSync( 8 ) );
+}
+
+User.methods.validPassword = ( password ) => {
+	return bycrypt.compareSync( password, this.password );
+}
 
 module.exports = mongoose.model( 'User', User );

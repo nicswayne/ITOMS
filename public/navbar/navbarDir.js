@@ -1,49 +1,28 @@
-angular.module('ITOMS')
-.directive('navbarDir', function(  ) {
+angular.module( 'ITOMS' )
+.directive( 'navbarDir', function(  ) {
 
 	return {
 
 		templateUrl: './navbar/navbar.html'
-		, controller: function( $scope, $state ) {
-			$scope.findAllImplants = () => {
-				$state.go( `implants`, {
-					url: `/implants`
-				} );
+		, controller: function( $scope, $state, $cookies, loginSrv ) {
+
+			let user = $cookies.getObject( `user` );
+			console.log( `navbar user cookies`, user );
+
+			$scope.goTo = ( state ) => {
+				if ( loginSrv.isLoggedIn() ) {
+					$state.go( state, {
+						url: `/${ state }`
+					} );
+				return;
+				}
+				$state.go( `login` );
 			};
-			$scope.drugs = () => {
-				$state.go(`drugs`, {
-					url: `/drugs`
-				} );
-			};
-			$scope.referrals = () => {
-				$state.go(`referrals`, {
-					url: `/referrals`
-				} );
-			};
-			$scope.patients = () => {
-				$state.go(`patients`, {
-					url: `/patients`
-				} );
-			};
-			$scope.admin = () => {
-				$state.go(`admin`, {},{
-					location: true
-				} );
-			};
-			$scope.materials = () => {
-                $state.go( `materials`, {
-					url: `/materials`
-                } );
-			};
-            $scope.boneGrafts = () => {
-                $state.go( `boneGrafts`, {
-					url: `/boneGrafts`
-                } );
-            };
-            $scope.repsPage = () => {
-				$state.go( `reps`, {
-					url: `/reps`
-				} );
+            $scope.logout = () => {
+            	$cookies.remove( 'user' );
+            	$state.go( `login`, {
+            		url: `/login`
+            	} );
             };
 		}
 	};

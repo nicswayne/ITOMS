@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'repCtrl', function( $scope, repSrv, $stateParams, $state ) {
+.controller( 'repCtrl', function( $scope, repSrv, $stateParams, $state, loginSrv ) {
 
 
 	getAllReps = () => {
@@ -15,16 +15,11 @@ angular.module( 'ITOMS' )
 		$state.go( `rep`, { 'id': id } );
 	};
 
-	$scope.goToRep = ( id ) => {
-		$state.go( `rep`, { id } );
-	};
-
 	$scope.goToNewRep = () => {
-		$state.go( `rep`, { 'id': `create` } );
-	};
-
-	$scope.goToUpdateRep = ( id ) => {
-		$state.go( `rep`, { id } );
+		if ( loginSrv.hasRight( 'createRep' ) ) {
+			$state.go( `rep`, { 'id': `create` } );
+			return;
+		}
 	};
 
 	$scope.reorderNeeded = function( item ) {

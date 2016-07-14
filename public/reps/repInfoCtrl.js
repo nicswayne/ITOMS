@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'repInfoCtrl', function( $scope, repSrv, $stateParams, $state ) {
+.controller( 'repInfoCtrl', function( $scope, repSrv, $stateParams, $state, loginSrv ) {
 
 	getRep = ( id ) => {
 		repSrv.getOneRep( id )
@@ -15,6 +15,24 @@ angular.module( 'ITOMS' )
 
 	getRep( $stateParams );
 
+	$scope.canCreateNote = () => {
+		if ( loginSrv.hasRight( `createNote` ) ) {
+			$scope.noteShow = !$scope.noteShow;
+		}
+	};
+
+	$scope.canUpdate = () => {
+		if ( loginSrv.hasRight( `updateRep` ) ) {
+			$scope.showUpdateForm = !$scope.showUpdateForm;
+		}
+	};
+	
+	$scope.canUpdateNote = () => {
+		if ( loginSrv.hasRight( `updateNote` ) ) {
+			$scope.noteUpdateShow = !$scope.noteUpdateShow;
+		}
+	};
+	
 	$scope.clear = () => {
 		$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
 	};
@@ -28,22 +46,25 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.updateRepInfo = ( obj ) => {
-		if ( $stateParams.id === `create` ) {
-			repSrv.createRep( obj )
-			.then( res => {
-				$state.go( $state.current, { 'id': res._id }, { reload: true } );
-			} );
-			return;
-		} else if ( obj.companies ) {
-			obj.companies = obj.companies.split( ', ' );
-			$scope.rep.companies.map( ( name ) => {
-				obj.companies.unshift( name );
-			} );
+		if ( loginSrv.hasRight( `updateRep` ) ) {
+			if ( $stateParams.id === `create` ) {
+				repSrv.createRep( obj )
+				.then( res => {
+					$state.go( $state.current, { 'id': res._id }, { reload: true } );
+				} );
+				return;
+			} else if ( obj.companies ) {
+				obj.companies = obj.companies.split( ', ' );
+				$scope.rep.companies.map( ( name ) => {
+					obj.companies.unshift( name );
+				} );
+			}
+			repSrv.updateRep( $stateParams.id, obj )
+				.then( res => {
+					$state.go( $state.current, { 'id': res._id }, { reload: true } );
+				} );
 		}
-		repSrv.updateRep( $stateParams.id, obj )
-			.then( res => {
-				$state.go( $state.current, { 'id': res._id }, { reload: true } );
-			} );
+		return;
 	};
 
 

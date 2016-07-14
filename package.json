@@ -11,9 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.4.2",
     "express": "^4.14.0",
     "express-session": "^1.13.0",
-    "mongoose": "^4.5.2"
+    "mongoose": "^4.5.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

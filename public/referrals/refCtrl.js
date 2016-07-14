@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'refCtrl', function( referralSrv, $scope, $stateParams, $state ) {
+.controller( 'refCtrl', function( referralSrv, $scope, $stateParams, $state, loginSrv ) {
 
 	getReferral = ( id ) => {
 		if ( id.id === `create` ) {
@@ -19,6 +19,36 @@ angular.module( 'ITOMS' )
 			.then( ( res ) => {
 				$state.go( $state.current, { 'id': res._id }, { reload: true } );
 			} );
+	};
+
+	$scope.canCreateNote = () => {
+		if ( loginSrv.hasRight( `createNote` ) ) {
+			$scope.noteShow = !$scope.noteShow;
+		}
+	};
+
+	$scope.canUpdate = () => {
+		if ( loginSrv.hasRight( `updateReferral` ) ) {
+			$scope.showUpdateForm = !$scope.showUpdateForm;
+		}
+	};
+
+	$scope.canUpdateAddress = () => {
+		if ( loginSrv.hasRight( `updateReferral` ) ) {
+			$scope.showAddress = !$scope.showAddress;
+		}
+	};
+
+	$scope.canUpdateLoc = () => {
+		if ( loginSrv.hasRight( `updateReferral` ) ) {
+			$scope.addLoc = !$scope.addLoc;
+		}
+	};
+
+	$scope.canUpdateNote = () => {
+		if ( loginSrv.hasRight( `updateNote` ) ) {
+			$scope.noteUpdateShow = !$scope.noteUpdateShow;
+		}
 	};
 
 	$scope.clear = () => {
@@ -52,24 +82,30 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.updateReferralInfo = ( obj ) => {
-		if ( $stateParams.id === `create` ) {
-			referralSrv.createReferral( obj )
-			.then( res => {
-				$state.go( $state.current, { 'id': res._id }, { reload: true } );
-			} );
-			return;
+		if ( loginSrv.hasRight( `updateReferral` ) ) {
+			if ( $stateParams.id === `create` ) {
+				referralSrv.createReferral( obj )
+				.then( res => {
+					$state.go( $state.current, { 'id': res._id }, { reload: true } );
+				} );
+				return;
+			}
+			referralSrv.updateReferral( $stateParams.id, obj )
+				.then( res => {
+					$state.go( $state.current, { 'id': res._id }, { reload: true } );
+				} );
 		}
-		referralSrv.updateReferral( $stateParams.id, obj )
-			.then( res => {
-				$state.go( $state.current, { 'id': res._id }, { reload: true } );
-			} );
+		return;
 	};
 
 	$scope.updateThisNote = ( id, obj ) => {
-		referralSrv.updateNote( id, obj )
-			.then( ( res ) => {
-				$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
-			} );
+		if ( loginSrv.hasRight( `updateNote` ) ) {
+			referralSrv.updateNote( id, obj )
+				.then( ( res ) => {
+					$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
+				} );
+		}
+		return;
 	};
 
 	getReferral( $stateParams );

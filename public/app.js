@@ -1,4 +1,4 @@
-angular.module( 'ITOMS', [ 'ui.router' ] )
+angular.module( 'ITOMS', [ 'ui.router', 'ngCookies' ] )
 .config( ( $stateProvider, $urlRouterProvider ) => {
 	
 	$urlRouterProvider.otherwise( `home` );

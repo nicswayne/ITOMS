@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'patCtrl', function( patSrv, $scope, $stateParams, $state ) {
+.controller( 'patCtrl', function( patSrv, $scope, $stateParams, $state, loginSrv ) {
 
 	getPatient = ( id ) => {
 		if ( id.id === `create` ) {
@@ -11,6 +11,12 @@ angular.module( 'ITOMS' )
 				console.log( 'pat', response );
 				$scope.patient = response;
 			} );
+	};
+
+	$scope.canUpdate = () => {
+		if ( loginSrv.hasRight( `updatePatient` ) ) {
+			$scope.showUpdateForm = !$scope.showUpdateForm;
+		}
 	};
 
 	$scope.clear = () => {
@@ -41,10 +47,14 @@ angular.module( 'ITOMS' )
 			} );
 			return;
 		}
-		patSrv.updatePatient( $stateParams.id, obj )
-			.then( res => {
-				$state.go( $state.current, { 'id': res._id }, { reload: true } );
-			} );
+		else if ( loginSrv.hasRight( `updatePatient` ) ) {
+			patSrv.updatePatient( $stateParams.id, obj )
+				.then( res => {
+					$state.go( $state.current, { 'id': res._id }, { reload: true } );
+				} );
+			return;
+			}
+	
 	};
 
 	getPatient( $stateParams );

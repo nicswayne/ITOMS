@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Referral</h1>{{test}}
-                        <button ng-show="!showUpdateForm" class="btn" ng-click="showUpdateForm = !showUPdateForm">Edit referral info</button>
+                        <button ng-show="!showUpdateForm" class="btn" ng-click="canUpdate()">Edit referral info</button>
                         <br>
                         <br>
                         <ul>
@@ -63,7 +63,7 @@
                             </form>
                         </ul>
                             <div ng-show="!showAddress">
-                                <button ng-show="!addLoc" class="btn" ng-click="addLoc = !addLoc">Add location</button>
+                                <button ng-show="!addLoc" class="btn" ng-click="canUpdateLoc()">Add location</button>
                                 <br>
                                 <form ng-show="addLoc" ng-submit="addLocation( newLocation )"><strong>New Location</strong>
                                     <ul>
@@ -118,13 +118,13 @@
                                             <button class="btn" ng-click="clear()">Cancel</button>
                                         </form>
                                     </div>
-                                    <button ng-show="!showAddress" class="btn" ng-click="showAddress = !showAddress">Edit location info</button>
+                                    <button ng-show="!showAddress" class="btn" ng-click="canUpdateAddress()">Edit location info</button>
                                 </ul>
                             </div>
                             <br>
                             <hr>
                             <div ng-show="!noteUpdateShow">
-                                <button  ng-show="!noteShow" ng-click="noteShow = !noteShow" class="btn">Add note</button>
+                                <button  ng-show="!noteShow" ng-click="canCreateNote()" class="btn">Add note</button>
                                 <form ng-show="noteShow" ng-submit="createNote( newNote )"><h3>New note</h3>
                                     <ul>
                                         <li>
@@ -179,7 +179,7 @@
                                             </ul>
                                         </form>
                                     </div>
-                                    <button ng-show="!noteUpdateShow" class="btn" ng-click="noteUpdateShow = !noteUpdateShow">Edit note</button>
+                                    <button ng-show="!noteUpdateShow" class="btn" ng-click="canUpdateNote()">Edit note</button>
                                 </ul>
                             <hr>
                             <ul ng-click="getPatient( patient._id )" ng-repeat="patient in oneRef.patients track by patient._id"><h3>Patients:</h3>

@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'referralCtrl', function( referralSrv, $scope, $state ) {
+.controller( 'referralCtrl', function( referralSrv, $scope, $state, loginSrv ) {
 
 	getAllReferrals = () => {
 		referralSrv.getReferrals()
@@ -14,11 +14,10 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.goToNewReferral = () => {
-		$state.go( `ref`, { 'id': `create` } );
-	};
-
-	$scope.goToUpdateReferral = ( id ) => {
-		$state.go( `ref`, { id } );
+		if ( loginSrv.hasRight( 'createReferral' ) ) {
+			$state.go( `ref`, { 'id': `create` } );
+			return;
+		}
 	};
 
 

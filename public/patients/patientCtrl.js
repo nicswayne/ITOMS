@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'patientCtrl', function( $scope, patSrv, $state ) {
+.controller( 'patientCtrl', function( $scope, patSrv, $state, loginSrv ) {
 
 	getPatients = () => {
 		patSrv.getAllPatients()
@@ -13,11 +13,11 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.goToNewPatient = () => {
-		$state.go( `pat`, { 'id': `create` } );
-	};
-
-	$scope.goToUpdatePatient = ( id ) => {
-		$state.go( `pat`, { id } );
+		if ( loginSrv.hasRight( 'createPatient' ) ) {
+			$state.go( `pat`, { 'id': `create` } );
+		return;
+		}
+		return;
 	};
 
 	$scope.getReferral = ( id ) => {
