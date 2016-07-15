@@ -8,6 +8,10 @@ angular.module( 'ITOMS' )
 			console.log( 'materials', res );
 		} );
 	};
+	
+	$scope.getRep = ( repId ) => {
+		$state.go( `rep`, { 'id': repId } );
+	};
 
 	$scope.goToUpdateMaterial = ( id ) => {
 		$state.go( `materialInfo`, { id } );

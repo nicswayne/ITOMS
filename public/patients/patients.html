@@ -6,6 +6,9 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+
+        <!-- search info -->
+
                         <h1>Patients</h1>
                         <label>Search by first name: </label>
                         <input type="text" ng-model="search.firstName">
@@ -19,9 +22,13 @@
                         <label>Search by social security: </label>
                         <input type="text" ng-model="search.ssn">
                         <br>
+                        <br>
                         <button class="btn" ng-click="goToNewPatient()">Add new patient</button>
                         <br>
-                        <br>
+                        <hr>
+
+<!-- repeated patient info -->
+
                         <ul ng-repeat="patient in patients | filter : search | orderBy: 'lastName'">
                            <li ng-click="patDetails = !patDetails">
                                 <strong>Name:</strong> {{ patient.firstName + ' ' + patient.lastName }} <span class="caret"></span>
@@ -54,6 +61,9 @@
                             </div>
                             <div>
                                 <h4>{{patient.referral.length}} Referral(s),  <span>{{patient.implants.length}} Implant(s),</span>  <span>{{patient.drugs.length}} Drug(s) </span></h4>
+
+        <!-- repeated patient referral info -->
+
                                 <ul ng-click="getReferral( ref._id )" ng-repeat="ref in patient.referral track by ref._id">
                                     <li>
                                         <strong>Name:</strong> <a>Dr. {{ref.firstName + ' ' + ref.lastName + ' ' + ref.suffix }}</a>

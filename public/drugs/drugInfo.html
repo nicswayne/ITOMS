@@ -6,6 +6,9 @@
             <div class="container-fluid">
                 <div class="row">
                     <div  ng-show="params" class="col-lg-12">
+
+        <!-- update drug form -->
+
                         <h1>Update Drug</h1>
                         <div>Last updated: {{drugInfo.updated.date | date: 'mediumDate'}}</div>
                         <form ng-submit="updateDrugInfo( editDrug )">
@@ -56,11 +59,15 @@
                                 </li>
                                 <br>
                             </ul>
-                            <input type="submit" id="submit" value="Save">
+                            <input class="btn" type="submit" id="submit" value="Save">
+                            <button class="btn" ng-click="clear()">Cancel</button>
                         </form>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                     </div>
                 </div>
+
+        <!-- create drug form -->
+
                 <div  ng-show="!params" class="col-lg-12">
                         <h1>Create Drug</h1>
                         <form ng-submit="createDrug( newDrug )">
@@ -104,7 +111,8 @@
                                 </li>
                                 <br>
                             </ul>
-                            <input type="submit" id="submit" value="Save">
+                            <input class="btn" type="submit" id="submit" value="Save">
+                            <button class="btn" ng-click="clear()">Cancel</button>
                         </form>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                     </div>

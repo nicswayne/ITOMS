@@ -7,7 +7,7 @@ angular.module( 'ITOMS' )
 		, controller: function( $scope, $state, $cookies, loginSrv ) {
 
 			let user = $cookies.getObject( `user` );
-			console.log( `navbar user cookies`, user );
+			// console.log( `navbar user cookies`, user );
 
 			$scope.goTo = ( state ) => {
 				if ( loginSrv.isLoggedIn() ) {

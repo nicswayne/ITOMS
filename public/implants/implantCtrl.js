@@ -8,6 +8,10 @@ angular.module( 'ITOMS' )
 			console.log( 'implants', res );
 		} );
 	};
+	
+	$scope.getRep = ( repId ) => {
+		$state.go( `rep`, { 'id': repId } );
+	};
 
 	$scope.goToUpdateImplant = ( id ) => {
 		$state.go( `implantInfo`, { id } );

@@ -11,6 +11,8 @@ setup backend to push appropriate id's into pat, ref, etc.
 
 auto fill out id's for inventory home screen
 
+for loop to makesure no dups before posting - patient - rep - etc
+
 add new ref, add existing ref
 
 * setup boneGrafts and ptBonegrafts?;

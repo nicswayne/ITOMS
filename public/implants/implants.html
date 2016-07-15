@@ -31,7 +31,7 @@
                         <div ng-repeat="implant in allImplants | filter: search | orderBy: 'brand' track by implant._id">
                             <ul>
                                 <li ng-show="implant.needsReorder">
-                                    <h3><strong>Reorder at least {{implant.reorderAmount}}!</strong></h3>
+                                    <h3 class="needsReorder"><strong>Reorder at least {{implant.reorderAmount}}</strong></h3>
                                 </li>
                                 <li>
                                     <strong>Brand:</strong> {{implant.brand}}
@@ -68,7 +68,7 @@
                                     </div>
                                 </ul>
                                 <br>
-                                <button class="btn">Reorder</button>
+                                <button class="btn" ng-click="getRep( implant.rep._id )">Contact Rep</button>
                                 <button class="btn" ng-click="goToUpdateImplant( implant._id )">Update</button>
                             </ul>
                         <hr>

@@ -9,6 +9,10 @@ angular.module( 'ITOMS' )
 		} );
 	};
 
+	$scope.getRep = ( repId ) => {
+		$state.go( `rep`, { 'id': repId } );
+	};
+
 	$scope.goToUpdateDrug = ( id ) => {
 		$state.go( `drugInfo`, { id } );
 	};

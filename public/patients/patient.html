@@ -110,18 +110,23 @@
                             </form>
 
         <!-- show referral information -->
+
                             <h3>{{patient.referral.length}} Referral(s):</h3>
                             <ul ng-repeat="ref in patient.referral track by ref._id">
                                 <li ng-click="getReferral( ref._id )" >
                                     <strong><a>Dr. {{ref.firstName + ' ' + ref.lastName + ' ' + ref.suffix }}</a></strong>
                                 </li>
                             </ul>
+
+            <!-- add new referral -->
+
                             <form ng-show="showRefs" ng-submit="updatePatientInfo( addReftoPat )" name="addRef">
                                 <label for="referral select">Select referral to add:  </label>
                                 <select name="referral select" ng-model="addReftoPat.referral">
                                   <option ng-repeat="referral in referralOptions track by referral._id"  value="{{referral._id}}">{{'Dr. ' + referral.firstName + ' ' + referral.lastName}} :&nbsp;&nbsp;&nbsp;{{referral.practiceName}}</option>
                                 </select><br>
                                 <input class="btn" type="submit" id="submit" value="Save">
+                                <button class="btn" ng-click="clear()">Cancel</button>
                             </form>
                             <br>
                             <button ng-click="addNewRef()" class="btn">Add new referral</button>

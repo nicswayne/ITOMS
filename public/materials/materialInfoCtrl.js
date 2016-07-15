@@ -11,6 +11,11 @@ angular.module( 'ITOMS' )
 			} );
 	};
 
+	$scope.clear = () => {
+		$state.go( `materials` );
+		return;
+	};
+
 	$scope.goToUpdateMaterial = ( id ) => {
 		$state.go( `materialInfo`, { id } );
 	};

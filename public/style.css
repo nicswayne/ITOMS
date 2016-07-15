@@ -41,6 +41,10 @@
     margin-right: -250px;
 }
 
+.needsReorder{
+    color: red;
+}
+
 .sidebar-nav {
     position: absolute;
     top: 0;

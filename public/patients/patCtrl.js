@@ -63,8 +63,7 @@ angular.module( 'ITOMS' )
 			obj.referral = [ obj.referral ];
 			$scope.patient.referral.forEach( val => {
 				obj.referral.push( val );
-			} )
-			// console.log( 'obj array', obj );
+			} );
 			patSrv.updatePatient( $stateParams.id, obj )
 				.then( res => {
 					$state.go( $state.current, { 'id': res._id }, { reload: true } );

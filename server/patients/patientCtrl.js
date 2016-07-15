@@ -67,18 +67,18 @@ module.exports = {
 	},
 
 	update( req, res ) {
-		Patient.findByIdAndUpdate( req.params.id, req.body, ( err, patient ) => {
+		Patient.findByIdAndUpdate( req.params.id, req.body, { new: true }, ( err, patient ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			else if ( req.body.referral ) {
+			if ( req.body.referral ) {
 				Referrals.findByIdAndUpdate( patient.referral[ 0 ], { $push: { 'patients': patient._id } }, ( err, ref ) => {
 					if ( err ) {
 						return res.status( 500 ).json( err );
 					}
-					return res.status( 200 ).json( patient );
 				} );
 			}
+			return res.status( 200 ).json( patient );
 		} );
 	},
 

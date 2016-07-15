@@ -6,6 +6,9 @@
             <div class="contar-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+
+		<!-- repeated rep info -->
+
 						<h2>Rep</h2>
 						<button ng-show="!showUpdateForm" class="btn" ng-click="canUpdate()">Edit rep info</button>
                         <br>
@@ -32,6 +35,10 @@
 								<strong>eMail:</strong> {{rep.email}}
 							</li>
 						</div>
+
+		<!-- update rep form -->
+
+
 						<form ng-show="showUpdateForm" ng-submit="updateRepInfo( updatedRep )">
                                 <li>
                                     <strong>Name:</strong> <input type="text" ng-model="updatedRep.name" placeholder="{{rep.name}}">
@@ -58,6 +65,9 @@
                             </form>
 						</ul>
 						<hr>
+
+		  <!-- new note form -->
+
                             <div ng-show="!noteUpdateShow">
                                 <button  ng-show="!noteShow" ng-click="canCreateNote()" class="btn">Add note</button>
                                 <form ng-show="noteShow" ng-submit="createNote( newNote )"><h3>New note</h3>
@@ -79,6 +89,9 @@
                                     <button class="btn" ng-click="clear()">Cancel</button>
                                 </form>
                             </div>
+
+	<!-- repeated note form -->
+
                             <h3>Notes</h3>
                             <div>
                                 <ul ng-repeat="note in rep.notes">
@@ -117,14 +130,31 @@
                                     <button ng-show="!noteUpdateShow" class="btn" ng-click="canUpdateNote()">Edit note</button>
                                 </ul>
                             <hr>
+
+		<!-- add implants reped -->
+
 						<ul ng-show="implantShow"><h3>Implants</h3>
+							<form ng-show="showImps" ng-submit="updateRepInfo( addImpToRep )" name="addImp">
+                                <label for="implant select">Select implant to add:  </label>
+                                <select name="implant select" ng-model="addImpToRep.implants">
+                                  <option ng-repeat="implantOption in implantOptions track by implantOption._id"  value="{{implantOption._id}}">{{'Brand:  ' + implantOption.brand + '  |  Size: ' + implantOption.size + '  |  Ref #: ' + implantOption.reference}}</option>
+                                </select><br>
+                                <input class="btn" type="submit" id="submit" value="Save">
+                                <button class="btn" ng-click="clear()">Cancel</button>
+                            </form>
+                            <button ng-show="!showImps" ng-click="addExistingImp()" class="btn">Add implant</button>
+                            <br>
+                            <br>
+
+		<!-- repeated implants reped -->
+
 							<ul ng-repeat="implant in rep.implants track by implant._id">
 								<li ng-show="reorderNeeded( implant )">
 									<h4 class="needsReorder">Needs Reorder</h4>
-									<p><strong>Amount to reorder:</strong>  {{amountToReorder( implant )}}</p>
-									<button class="btn" ng-click="reorder( implant._id )">Reorder</button>
+									<p><strong>Amount to reorder: {{amountToReorder( implant )}}</strong></p>
+									<!-- <button class="btn" ng-click="reorder( implant._id )">Reorder</button> -->
 								</li>
-								<br>
+								<!-- <br> -->
 								<li>
 									<strong>Brand:</strong> {{implant.brand}}
 								</li>
@@ -144,19 +174,36 @@
 								<br>
 							</ul>
 						</ul>
+
+		<!-- add drug to rep -->
+
 						<ul ng-show="drugShow"><h3>Drugs</h3>
+							<form ng-show="showDrugs" ng-submit="updateRepInfo( addDrugToRep )" name="addDrug">
+                                <label for="Drug select">Select drug to add:  </label>
+                                <select name="drug select" ng-model="addDrugToRep.drugs">
+                                  <option ng-repeat="drugOption in drugOptions track by drugOption._id"  value="{{drugOption._id}}">{{'Brand:  ' + drugOption.brand + '  |   Generic:  ' + drugOption.generic + '  |  strength:  ' + drugOption.strength}}</option>
+                                </select><br>
+                                <input class="btn" type="submit" id="submit" value="Save">
+                                <button class="btn" ng-click="clear()">Cancel</button>
+                            </form>
+                            <button ng-show="!showDrugs" ng-click="addExistingDrug()" class="btn">Add drug</button>
+                            <br>
+                            <br>
+
+		<!-- repeated drugs reped -->
+
 							<ul ng-repeat="drug in rep.drugs track by drug._id">
 								<li ng-show="reorderNeeded( drug )">
 									<h4 class="needsReorder">Needs Reorder</h4>
-									<p><strong>Amount to reorder:</strong>  {{amountToReorder( drug )}} vial(s)</p>
-									<button class="btn" ng-click="reorder( drug._id )">Reorder</button>
+									<p><strong>Amount to reorder: {{amountToReorder( drug )}} vial(s)</strong></p>
+									<!-- <button class="btn" ng-click="reorder( drug._id )">Reorder</button> -->
 								</li>
-								<br>
+								<!-- <br> -->
 								<li>
 									<strong>Brand:</strong> {{drug.brand}}
 								</li>
 								<li>
-									<strong>Gric:</strong> {{drug.gric}}
+									<strong>Generic:</strong> {{drug.generic}}
 								</li>
 								<li>
 									<strong>Strength</strong> {{drug.strength}}
@@ -174,14 +221,31 @@
 								<br>
 							</ul>
 						</ul>
+
+			<!-- add material to rep -->
+
 						<ul ng-show="materialShow"><h3>Materials</h3>
+							<form ng-show="showMats" ng-submit="updateRepInfo( addMatToRep )" name="addMat">
+                                <label for="Mat select">Select mat to add:  </label>
+                                <select name="mat select" ng-model="addMatToRep.materials">
+                                  <option ng-repeat="matOption in matOptions track by matOption._id"  value="{{matOption._id}}">{{'Name:  ' + matOption.name + '  |   Desc:  ' + matOption.desc}}</option>
+                                </select><br>
+                                <input class="btn" type="submit" id="submit" value="Save">
+                                <button class="btn" ng-click="clear()">Cancel</button>
+                            </form>
+                            <button ng-show="!showMats" ng-click="addExistingMat()" class="btn">Add material</button>
+                            <br>
+                            <br>
+
+<!-- repeated materials reped -->
+
 							<ul ng-repeat="material in rep.materials track by material._id">
 								<li ng-show="reorderNeeded( material )">
 									<h4 class="needsReorder">Needs Reorder</h4>
-									<p><strong>Amount to reorder:</strong>  {{amountToReorder( material )}} {{material.qtyType}}</p>
-									<button class="btn" ng-click="reorder( material._id )">Reorder</button>
+									<p><strong>Amount to reorder: {{amountToReorder( material )}} {{material.qtyType}}</strong></p>
+									<!-- <button class="btn" ng-click="reorder( material._id )">Reorder</button> -->
 								</li>
-								<br>
+								<!-- <br> -->
 								<li>
 									<strong>Name:</strong> {{material.name}}
 								</li>

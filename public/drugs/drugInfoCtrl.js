@@ -11,6 +11,11 @@ angular.module( 'ITOMS' )
 			} );
 	};
 
+	$scope.clear = () => {
+		$state.go( `drugs` );
+		return;
+	};
+
 	$scope.goToUpdateDrug = ( id ) => {
 		$state.go( `drugInfo`, { id } );
 	};

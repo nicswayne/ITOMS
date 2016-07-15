@@ -26,36 +26,6 @@ angular.module( 'ITOMS' )
 
 	getPatients();
 
-	$scope.selection = {
-		options: [
-			{
-				name: `firstName`,
-				value: `firstName`
-			},
-			{
-				name: `lastName`,
-				value: `lastName`
-			},
-			{
-				name: `date of birth`,
-				value: `DOB`
-			},
-			{
-				name: `social security number`,
-				value: `ssn`
-			},
-			{
-				name: `phone number`,
-				value: `phoneNumber`
-			}
-		],
-
-		filter: { 
-			name: `lastName`,
-			value: `lastName`
-		}
-	}
-
 	$scope.show = false;
 
 

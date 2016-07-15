@@ -30,8 +30,8 @@
 
                         <div ng-repeat="drug in allDrugs | filter: search | orderBy: 'brand' track by drug._id">
                             <ul>
-                                <li ng-show="drug.needsReorder">
-                                    <h3><strong>Reorder at least {{drug.reorderAmount}}!</strong></h3>
+                                <li class="needsReorder" ng-show="drug.needsReorder">
+                                    <h3><strong>Reorder at least {{drug.reorderAmount}}</strong></h3>
                                 </li>
                                 <li>
                                     <strong>Brand:</strong> {{drug.brand}}
@@ -77,7 +77,7 @@
                                     </div>
                                 </ul>
                                 <br>
-                                <button class="btn">Reorder</button>
+                                <button class="btn" ng-click="getRep( drug.rep._id )">Contact rep</button>
                                 <button class="btn" ng-click="goToUpdateDrug( drug._id )">Update</button>
                             </ul>
                         <hr>

@@ -7,6 +7,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <ul ng-repeat="drug in drugs track by drug._id">
+        
+        <!-- Drugs that need reorder -->
+
                         <h2><strong>Drugs</strong></h2>
                             <li ng-click="show = !show">
                                 <strong>Brand:</strong> {{drug.brand}}
@@ -40,8 +43,13 @@
                                     <strong>Last Order Quantity:</strong> {{drug.orders[drug.orders.length - 1].qty}} 
                                 </li>
                             </ul>
-                            <button ng-click="getRep(drug.rep)">Contact Rep</button>
+                            <br>
+                            <button class="btn" ng-click="getRep(drug.rep)">Contact Rep</button>
                         </ul>
+                        <hr>
+
+        <!-- imlants that need reorder -->
+
                         <ul ng-repeat="implant in implants track by implant._id">
                         <h2><strong>Implants</strong></h2>
                             <li ng-click="show = !show">
@@ -70,8 +78,13 @@
                                     <strong>Last Order Quantity:</strong> {{implant.orders[implant.orders.length - 1].qty}}
                                 </li>
                             </ul>
-                            <button ng-click="getRep(implant.rep)">Contact Rep</button>
+                            <br>
+                            <button class="btn" ng-click="getRep(implant.rep)">Contact Rep</button>
                         </ul>
+                        <hr>
+
+        <!-- materials that need reorder -->
+
                         <ul ng-repeat="material in materials track by material._id">
                         <h2><strong>Materials</strong></h2>
                             <li ng-click="show = !show">
@@ -103,7 +116,7 @@
                                     <strong>Last Order Quantity:</strong> {{material.orders[material.orders.length - 1].qty}}
                                 </li>
                             </ul>
-                            <button ng-click="getRep(material.rep)">Contact Rep</button>
+                            <button class="btn" ng-click="getRep(material.rep)">Contact Rep</button>
                         </ul>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                     </div>

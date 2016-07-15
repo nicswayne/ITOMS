@@ -1,4 +1,7 @@
 const Rep = require( './Reps' );
+const Implants = require( '../implants/Implants' );
+const Drugs = require( '../drugs/Drugs' );
+const Mats = require( '../materials/Materials' );
 
 module.exports = {
 
@@ -31,9 +34,31 @@ module.exports = {
 	},
 
 	update( req, res ) {
-		Rep.findByIdAndUpdate( req.params.id, req.body, ( err, rep ) => {
+		Rep.findByIdAndUpdate( req.params.id, req.body, { new: true }, ( err, rep ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
+			}
+			if ( req.body.implants ) {
+				console.log( 'rep implants', rep.implants );
+				Implants.findByIdAndUpdate( rep.implants[ 0 ], { rep: rep._id }, ( err, imp ) => {
+					if ( err ) {
+						return res.status( 500 ).json( err );
+					}
+				} );
+			}
+			if ( req.body.drugs ) {
+				Drugs.findByIdAndUpdate( rep.drugs[ 0 ], { rep: rep._id }, ( err, drug ) => {
+					if ( err ) {
+						return res.status( 500 ).json( err );
+					}
+				} );
+			}
+			if ( req.body.materials ) {
+				Mats.findByIdAndUpdate( rep.materials[ 0 ], { reps: rep._id }, ( err, mats ) => {
+					if ( err ) {
+						return res.status( 500 ).json( err );
+					}
+				} );
 			}
 			return res.status( 200 ).json( rep );
 		} );
