@@ -1,31 +1,18 @@
 angular.module( 'ITOMS' )
-.service( 'ptDrugSrv', function( server, $http, $q ) {
+.service( 'ptDrugSrv', function( server, $http ) {
 
-	this.getAllPatDrugs = ( idArr ) => {
-		let allResults = $q.defer;
-		let resultArr = [];
-		idArr.forEach( ( id ) => {
-			return $http.get( `${ server }ptDrugs/${ id }` )
-				.then( ( res ) => {
-					resultArr.push( res.data );
-					if ( resultArr.length === idArr.length ) {
-						allResults.resolve( 'resultArr' );
-					}
-				} );
-		} );
-		return allResults.promise;
-	};
-
-	this.getPatDrugInfo = ( ptId, impId ) => {
-		return $http.get( `${ server }ptDrugs/${ ptId }/${ impId }` )
+	this.createPtDrug = ( obj ) => {
+		console.log( 'drug obj', obj );
+		return $http.post( `${ server }ptDrugs`, obj )
 			.then( ( res ) => {
 				return res.data;
 			} );
-	};
-	this.getPatient = ( id ) => {
-		return $http.get( `${ server }patients/${ id.id }` )
+	},
+
+	this.updatePtDrug = ( obj ) => {
+		return $http.put( `${ server }ptDrugs/${ obj._id }` )
 			.then( ( res ) => {
 				return res.data;
 			} );
-	};
+	}
 } );

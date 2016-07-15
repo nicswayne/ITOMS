@@ -8,8 +8,9 @@ module.exports = {
 
 	find( req, res ) {
 		Patient.find( { } )
+		.populate( `updated.user`, 'name userName' )
 		.populate( `referral`, `firstName lastName suffix practiceName phone fax email active` )
-		.populate( `implants`, `brand size lot insertionDate` )
+		.populate( `implants` )
 		.populate( `drugs` )
 		.exec( ( err, ptDrug ) => {
 			if ( err ) {
@@ -37,6 +38,7 @@ module.exports = {
 
 	, findOne( req, res ) {
 		Patient.findById( req.params.id )
+		.populate( `updated.user`, 'name userName' )
 		.populate( `referral`, `firstName lastName suffix practiceName phone fax email active` )
 		.populate( `implants` )
 		.populate( `drugs` )
@@ -54,7 +56,7 @@ module.exports = {
 				}
 				Implants.populate( populatedPtDrug, {
 					path: `implants.implant`
-					, select: `brand size`
+					, select: `brand size onHand minOnHand`
 				}
 			, ( err, populatedPtImplant ) => {
 				if ( err ) {

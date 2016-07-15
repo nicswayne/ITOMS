@@ -38,7 +38,9 @@ const User = mongoose.Schema( {
 	createDrug: { type: Boolean, required: true },
 	createMaterial: { type: Boolean, required: true },
 	createImplant: { type: Boolean, required: true },
-	createNote: { type: Boolean, required: true }
+	createNote: { type: Boolean, required: true },
+	createPtImplant: { type: Boolean, required: true },
+	createPtDrug: { type: Boolean, required: true }
 
 } );
 

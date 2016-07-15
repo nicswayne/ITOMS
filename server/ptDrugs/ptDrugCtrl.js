@@ -1,4 +1,5 @@
 const PtDrug = require( './PtDrugs' );
+const Patient = require( '../patients/Patients' );
 
 module.exports = {
 
@@ -21,11 +22,11 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( populatedPtDrug );
-		})
+		} );
 	},
 
 	update( req, res, next ) {
-		PtDrug.findByIdAndUpdate( req.params.id, req.body, ( err, ptDrug ) => {
+		PtDrug.findByIdAndUpdate( req.params.id, req.body, { new: true }, ( err, ptDrug ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
@@ -33,13 +34,20 @@ module.exports = {
 		} )
 	},
 
-	create( req, res, next ) {
+	create( req, res ) {
+		console.log( 'req', req.body );
 		new PtDrug( req.body ).save( ( err, newPtDrug ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
+			console.log( 'new drug', newPtDrug );
+			Patient.findByIdAndUpdate( newPtDrug.patient, { $push: { drugs: newPtDrug._id } }, ( err, pat ) => {
+				if ( err ) {
+					return res.status( 500 ).json( err );
+				}
+			} );
 			return res.status( 201 ).json( newPtDrug );
-		})
+		} )
 	},
 
 	delete( req, res, next ) {

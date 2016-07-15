@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'patCtrl', function( patSrv, $scope, $stateParams, $state, loginSrv, referralSrv ) {
+.controller( 'patCtrl', function( patSrv, $scope, $stateParams, $state, loginSrv, referralSrv, impSrv, drugSrv, ptImpSrv, ptDrugSrv ) {
 
 	getPatient = ( id ) => {
 		if ( id.id === `create` ) {
@@ -8,8 +8,22 @@ angular.module( 'ITOMS' )
 		}
 		patSrv.getPatient( id )
 			.then( ( response ) => {
-				// console.log( 'pat', response );
+				console.log( 'pat', response );
 				$scope.patient = response;
+			} );
+	};
+
+	getImplants = () => {
+		impSrv.getAllImplants()
+				.then( ( res ) => {
+					$scope.impOptions = res;	
+				} );
+	};
+
+	getDrugs = () => {
+		drugSrv.getAllDrugs()
+			.then( ( res ) => {
+				$scope.drugOptions = res;
 			} );
 	};
 
@@ -27,6 +41,34 @@ angular.module( 'ITOMS' )
 	$scope.canUpdate = () => {
 		if ( loginSrv.hasRight( `updatePatient` ) ) {
 			$scope.showUpdateForm = !$scope.showUpdateForm;
+
+		}
+	};
+
+	$scope.canCreatePtDrug = () => {
+		if ( loginSrv.hasRight( `createPtDrug` ) ) {
+			$scope.ptDrugCreate = !$scope.ptDrugCreate;
+			getDrugs();
+		}
+	};
+
+	$scope.canCreatePtImp = () => {
+		if ( loginSrv.hasRight( `createPtImplant` ) ) {
+			$scope.ptImplantCreate = !$scope.ptImplantCreate;
+			getImplants();
+		}
+	};
+
+	$scope.canUpdatePtImp = () => {
+		if ( loginSrv.hasRight( `updatePtImplant` ) ) {
+			$scope.showForm = !$scope.showForm;
+			getImplants();
+		}
+	};
+	$scope.canUpdatePtDrug = () => {
+		if ( loginSrv.hasRight( `updatePtDrug` ) ) {
+			$scope.showDrugForm = !$scope.showDrugForm;
+			getDrugs();
 		}
 	};
 
@@ -36,6 +78,36 @@ angular.module( 'ITOMS' )
 			return;
 		}
 		$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
+	};
+
+	$scope.createPtDrug = ( obj ) => {
+		if ( loginSrv.hasRight( `createPtDrug` ) ) {
+			if ( !obj.date ) {
+				obj.date = new Date();
+			}
+			obj.patient = $stateParams.id;
+			obj.updated = { date: new Date() };
+			// console.log( 'drug obj', obj );
+			ptDrugSrv.createPtDrug( obj )
+			.then( res => {
+					$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
+				} );
+		}
+	};
+
+	$scope.createPtImplant = ( obj ) => {
+		if ( loginSrv.hasRight( `createPtImplant` ) ) {
+			if ( !obj.insertionDate ) {
+				obj.insertionDate = new Date();
+			}
+			obj.patient = $stateParams.id;
+			obj.updated = { date: new Date() };
+			console.log( 'imp obj', obj );
+			ptImpSrv.createPtImp( obj )
+			.then( res => {
+					$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
+				} );
+		}
 	};
 
 	$scope.getPtImplantInfo = ( ptImplantId ) => {
@@ -74,6 +146,5 @@ angular.module( 'ITOMS' )
 	};
 
 	getPatient( $stateParams );
-	$scope.show = false;
 
 } );

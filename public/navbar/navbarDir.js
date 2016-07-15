@@ -24,6 +24,14 @@ angular.module( 'ITOMS' )
             		url: `/login`
             	} );
             };
+
+            checkAdmin = () => {
+            	if ( user.isAdmin ){
+            		$scope.isAdmin = true;
+            	}
+            }
+            checkAdmin();
+
 		}
 	};
 } );

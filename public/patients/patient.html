@@ -1,11 +1,4 @@
-<div id="wrapper">
 
-    <patient-sidebar></patient-sidebar>
-    <navbar-dir></navbar-dir>
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
                         <h1>Patient</h1>
                         <button ng-show="!showUpdateForm" class="btn" ng-click="canUpdate()">Edit patient info</button>
                         <br>
@@ -129,101 +122,280 @@
                                 <button class="btn" ng-click="clear()">Cancel</button>
                             </form>
                             <br>
-                            <button ng-click="addNewRef()" class="btn">Add new referral</button>
-                            <button ng-show="!showRefs" ng-click="addExistingRef()" class="btn">Add existing referral</button>
+                            <!-- <button ng-click="addNewRef()" class="btn">Add new referral</button> -->
+                            <button ng-show="!showRefs" ng-click="addExistingRef()" class="btn">Add  referral</button>
                             <br>
 
         <!-- show patient implants -->
-
-                            <ul ng-repeat="implant in patient.implants track by implant._id"><h3>{{patient.implants.length}} Implant(s):</h3>
-                                <li ng-click="show = !show">
-                                    <strong>Insertion date:</strong> {{implant.insertionDate | date : 'mediumDate'}} <span class="caret"></span>
-                                </li>
-                                <div ng-show="show">
-                                    <li>
-                                        <strong>Brand:</strong> {{implant.implant.brand}}
+                            
+                            <h3>{{patient.implants.length}} Implant(s):</h3>
+                            <ul ng-repeat="implant in patient.implants track by implant._id">
+                                <div ng-show="!showForm">
+                                    <li ng-show="!ptImplantCreate" ng-click="show = !show">
+                                        <strong>Insertion date:</strong> {{implant.insertionDate | date : 'mediumDate'}} <span class="caret"></span>
                                     </li>
-                                    <li>
-                                        <strong>Size:</strong> {{implant.implant.size}}
-                                    </li>
-                                    <li>
-                                        <strong>Lot:</strong> {{implant.lot}}
-                                    </li>
-                                    <li>
-                                        <strong>Tooth #</strong> {{implant.tooth}}
-                                    </li>
-                                    <div>
-                                        <button ng-click="details = !details" ng-show="!details">Details</button>
-                                        <button>Edit</button>
-                                        <ul ng-show="details" ng-click="details = !details">
-                                            <li>
-                                                <strong>Removal date:</strong> {{implant.removalDate}}
-                                            </li>
-                                            <li>
-                                                <strong>Prosthetic placement date:</strong> {{implant.prostheticDate}}
-                                            </li>
-                                            <li>
-                                                <strong>Healing abutment placement date:</strong> {{implant.healingAbutmentDate}}
-                                            </li>
-                                            <li>
-                                                <strong>Bone quantity:</strong> {{implant.boneQty}}
-                                            </li>
-                                            <li>
-                                                <strong>Bone quality:</strong> {{implant.boneQlty}}
-                                            </li>
-                                            <li>
-                                                <strong>Bone Status:</strong> {{implant.boneStatus}}
-                                            </li>
-                                            <li>
-                                                Last update date: {{implant.updated.date | date : 'medium' }}
-                                            </li>
-                                            <!-- <li>
-                                                {{"last updated by" + updateUser}}
-                                            </li> -->
-                                        </ul>
+                                    <div ng-show="show">
+                                        <li>
+                                            <strong>Brand:</strong> {{implant.implant.brand}}
+                                        </li>
+                                        <li>
+                                            <strong>Size:</strong> {{implant.implant.size}}
+                                        </li>
+                                        <li>
+                                            <strong>Lot:</strong> {{implant.lot}}
+                                        </li>
+                                        <li>
+                                            <strong>Tooth #</strong> {{implant.tooth}}
+                                        </li>
+                                        <div>
+                                            <ul ng-show="details" ng-click="details = !details">
+                                                <li>
+                                                    <strong>Removal date:</strong> {{implant.removalDate}}
+                                                </li>
+                                                <li>
+                                                    <strong>Prosthetic placement date:</strong> {{implant.prostheticDate}}
+                                                </li>
+                                                <li>
+                                                    <strong>Healing abutment placement date:</strong> {{implant.healingAbutmentDate}}
+                                                </li>
+                                                <li>
+                                                    <strong>Bone quantity:</strong> {{implant.boneQty}}
+                                                </li>
+                                                <li>
+                                                    <strong>Bone quality:</strong> {{implant.boneQlty}}
+                                                </li>
+                                                <li>
+                                                    <strong>Bone Status:</strong> {{implant.boneStatus}}
+                                                </li>
+                                                <li>
+                                                    Last update date: {{implant.updated.date | date : 'medium' }}
+                                                </li>
+                                                <!-- <li>
+                                                    {{"last updated by" + updateUser}}
+                                                </li> -->
+                                            </ul>
+                                            <button class="btn" ng-click="details = !details" ng-show="!details">Details</button>
+                                            <button class="btn" ng-click="details = !details" ng-show="details">Hide details</button>
+                                            <button class="btn" ng-show="!updateImplant" ng-click="canUpdatePtImp()">Edit</button>
+                                            <button class="btn" ng-show="updateImplant" ng-click="clear()">Cancel</button>
+                                        </div>
                                     </div>
                                 </div>
+
+            <!-- update pt implant -->
+
+                                <div ng-show="showForm">
+                                    <form ng-submit="updatePtImplant( updatePtImp )">
+                                        <ul>
+                                            <label for="imp select">Select change imp to:  </label>
+                                            <select name="imp select" ng-model="updatePtImp.implant">
+                                              <option ng-repeat="impOption in impOptions track by impOption._id"  value="{{impOption._id}}">{{'Brand:  ' + impOption.brand + '  |  Size: ' + impOption.size + '  |  Ref #: ' + impOption.reference}}</option>
+                                            </select>
+                                            <br>
+                                            <br>
+                                            <li>
+                                                <strong>Insertion date:</strong> <input type="text" ng-model="updatePtImp.insertionDate" placeholder="{{implant.insertionDate | date: 'shortDate'}}">
+                                            </li>
+                                            <br>
+                                            <li>
+                                                <strong>Lot:</strong> <input type="text" ng-model="updatePtImp.lot" placeholder="{{implant.lot}}">
+                                            </li>
+                                            <br>
+                                            <li>
+                                                <strong>Tooth #</strong> <input type="text" ng-model="updatePtImp.tooth" placeholder="{{implant.tooth}}">
+                                            </li>
+                                            <br>
+                                            <li>
+                                                <strong>Removal date:</strong> <input type="text" ng-model="updatePtImp.removalDate" placeholder="{{implant.removalDate | date: 'shortDate'}}">
+                                            </li>
+                                            <br>
+                                            <li>
+                                                <strong>Prosthetic placement date:</strong> <input type="text" ng-model="updatePtImp.prostheticDate" placeholder="{{implant.prostheticDate | date: 'shortDate'}}">
+                                            </li>
+                                            <br>
+                                            <li>
+                                                <strong>Healing abutment placement date:</strong> <input type="text" ng-model="updatePtImp.healingAbutementDate" placeholder="{{implant.healingAbutementDate | date: 'shortDate'}}">
+                                            </li>
+                                            <br>
+                                            <li>
+                                                <strong>Bone quantity:</strong> <input type="text" ng-model="updatePtImp.boneQty" placeholder="{{implant.boneQty}}">
+                                            </li>
+                                            <br>
+                                            <li>
+                                                <strong>Bone quality:</strong> <input type="text" ng-model="updatePtImp.boneQlty" placeholder="{{implant.boneQlty}}">
+                                            </li>
+                                            <br>
+                                            <li>
+                                                <strong>Bone Status:</strong> <input type="text" ng-model="updatePtImp.boneStatus" placeholder="{{implant.boneStatus}}">
+                                            </li>
+                                            <br>
+                                        </ul>
+                                        <input class="btn" type="submit" value="Save">
+                                        <button class="btn" ng-click="clear()">Cancel</button>
+                                        <br>
+                                        <br>
+                                    </form>
+                                </div>
+
                             </ul>
 
-            <!-- show patient drugs -->
+        <!-- create pt implant form -->
 
-                            <ul ng-repeat="drug in patient.drugs track by drug._id"><h3>{{patient.drugs.length}} Drug(s)</h3>
-                                <li ng-click="show = !show">
-                                    <strong>Date:</strong> {{drug.date | date : 'mediumDate'}} <span class="caret"></span>
-                                </li>
-                                <div ng-show="show">
+                            <form ng-show="ptImplantCreate" ng-submit="createPtImplant( newPtImp )">
+                                <ul>
+                                    <label for="imp select">Select imp to add:  </label>
+                                    <select name="imp select" ng-model="newPtImp.implant">
+                                      <option ng-repeat="impOption in impOptions track by impOption._id"  value="{{impOption._id}}">{{'Brand:  ' + impOption.brand + '  |  Size: ' + impOption.size + '  |  Ref #: ' + impOption.reference}}</option>
+                                    </select>
+                                    <br>
+                                    <br>
                                     <li>
-                                        <strong>Brand:</strong> {{drug.drug.brand}}
+                                        <strong>Insertion date:</strong> <input type="text" ng-model="newPtImp.insertionDate">
                                     </li>
+                                    <br>
                                     <li>
-                                        <strong>Generic:</strong> {{drug.drug.generic}}
+                                        <strong>Lot:</strong> <input type="text" ng-model="newPtImp.lot">
                                     </li>
+                                    <br>
                                     <li>
-                                        <strong>Amount Used:</strong> {{drug.volumeUsed + ' ' + drug.drug.vialType}}
+                                        <strong>Tooth #</strong> <input type="text" ng-model="newPtImp.tooth">
                                     </li>
+                                    <br>
                                     <li>
-                                        <strong>Amount Wasted</strong> {{drug.volumeWasted + ' ' + drug.drug.vialType}}
+                                        <strong>Removal date:</strong> <input type="text" ng-model="newPtImp.removalDate">
                                     </li>
-                                    <div>
-                                        <button ng-click="details = !details" ng-show="!details">Details</button>
-                                        <button ng-click="updateDrug( drug._id )">Edit</button>
-                                        <ul ng-show="details" ng-click="details = !details">
-                                            <li>
-                                                Last update date: {{drug.updated.date | date : 'medium' }}
-                                            </li>
-                                            <!-- <li>
-                                                {{"last updated by" + updateUser}}
-                                            </li> -->
-                                        </ul>
+                                    <br>
+                                    <li>
+                                        <strong>Prosthetic placement date:</strong> <input type="text" ng-model="newPtImp.protheticDate">
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <strong>Healing abutment placement date:</strong> <input type="text" ng-model="newPtImp.healingAbutementDate">
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <strong>Bone quantity:</strong> <input type="text" ng-model="newPtImp.boneQty">
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <strong>Bone quality:</strong> <input type="text" ng-model="newPtImp.boneQlty">
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <strong>Bone Status:</strong> <input type="text" ng-model="newPtImp.boneStatus">
+                                    </li>
+                                    <br>
+                                </ul>
+                                <input class="btn" type="submit" value="Save">
+                                <button class="btn" ng-click="clear()">Cancel</button>
+                            </form>
+
+                            <br>
+                            <button ng-show="!ptImplantCreate" ng-click="canCreatePtImp()" class="btn">Add implant</button>
+                            <br>
+
+            <!-- show patient drugs -->
+                            <h3>{{patient.drugs.length}} Drug(s)</h3>
+                            <ul ng-show="!ptDrugCreate" ng-repeat="drug in patient.drugs track by drug._id">
+                                <div ng-show="!showDrugForm">
+                                    <li ng-click="show = !show">
+                                        <strong>Date:</strong> {{drug.date | date : 'mediumDate'}} <span class="caret"></span>
+                                    </li>
+                                    <div ng-show="show">
+                                        <li>
+                                            <strong>Brand:</strong> {{drug.drug.brand}}
+                                        </li>
+                                        <li>
+                                            <strong>Generic:</strong> {{drug.drug.generic}}
+                                        </li>
+                                        <li>
+                                            <strong>Amount Used:</strong> {{drug.volumeUsed + ' ' + drug.drug.vialType}}
+                                        </li>
+                                        <li>
+                                            <strong>Amount Wasted</strong> {{drug.volumeWasted + ' ' + drug.drug.vialType}}
+                                        </li>
+                                        <div>
+                                            <button class="btn" ng-click="details = !details" ng-show="!details">Details</button>
+                                            <button class="btn" ng-click="details = !details" ng-show="details">Hide details</button>
+                                            <button class="btn" ng-click="canUpdatePtDrug()">Edit</button>
+                                            <br>
+                                            <ul ng-show="details" ng-click="details = !details">
+                                                <li>
+                                                    Last update date: {{drug.updated.date | date : 'medium' }}
+                                                </li>
+                                                <!-- <li>
+                                                    {{"last updated by" + updateUser}}
+                                                </li> -->
+                                            </ul>
+                                        </div>
                                     </div>
+                                </div>
+            
+            <!-- update pt drugs -->
+
+                                    <div ng-show="showDrugForm">
+                                        <form ng-submit="updatePtDrug( updatePtDrug )">
+                                            <ul>
+                                                <label for="drug select">Select change drug to:  </label>
+                                                <select name="drug select" ng-model="addDrugToRep.drugs">
+                                                  <option ng-repeat="drugOption in drugOptions track by drugOption._id"  value="{{drugOption._id}}">{{'Brand:  ' + drugOption.brand + '  |   Generic:  ' + drugOption.generic + '  |  strength:  ' + drugOption.strength}}</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                <li>
+                                                    <strong>Date:</strong> <input type="text" ng-model="newPtDrug.date" placeholder="{{drug.date | date : 'shortDate'}}">
+                                                </li>
+                                                <br>
+                                                <li>
+                                                    <strong>Amount used:</strong> <input type="text" ng-model="newPtDrug.volumeUsed" placeholder="{{drug.volumeUsed}}">
+                                                </li>
+                                                <br>
+                                                <li>
+                                                    <strong>Amount wasted</strong> <input type="text" ng-model="newPtDrug.volumeWasted" placeholder="{{drug.volumeWasted}}">
+                                                </li>
+                                                <br>
+                                            <input class="btn" type="submit" value="Save">
+                                            <button class="btn" ng-click="clear()">Cancel</button>
+                                            <br>
+                                            <br>
+                                        </form>
+                                    </div>
+
+                                </ul>
+
+            <!-- create pt drug form -->
+
+                                <form ng-show="ptDrugCreate" ng-submit="createPtDrug( newPtDrug )">
+                                    <ul>
+                                        <label for="Drug select">Select drug to add:  </label>
+                                        <select name="drug select" ng-model="newPtDrug.drug">
+                                          <option ng-repeat="drugOption in drugOptions track by drugOption._id"  value="{{drugOption._id}}">{{'Brand:  ' + drugOption.brand + '  |   Generic:  ' + drugOption.generic + '  |  strength:  ' + drugOption.strength}}</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <li>
+                                            <strong>Date:</strong> <input type="text" ng-model="newPtDrug.date">
+                                        </li>
+                                        <br>
+                                        <li>
+                                            <strong>Amount used:</strong> <input type="number" ng-model="newPtDrug.volumeUsed">
+                                        </li>
+                                        <br>
+                                        <li>
+                                            <strong>Amount wasted</strong> <input type="number" ng-model="newPtDrug.volumeWasted">
+                                        </li>
+                                        <br>
+                                    </ul>
+                                    <input class="btn" type="submit" value="Save">
+                                    <button class="btn" ng-click="clear()">Cancel</button>
+                                </form>
+
+                                <br>
+                                <button ng-show="!ptDrugCreate" ng-click="canCreatePtDrug()" class="btn">Add Drug</button>
+                                <br>
                                 </div>
                             </ul>
                         </ul>
 
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-</div>
+          

@@ -8,8 +8,30 @@
 </head>
 <body>
 
+<div id="wrapper">
 
-<ui-view></ui-view>
+<!-- navBars -->
+
+    <home-sidebar></home-sidebar>
+	<navbar-dir></navbar-dir>
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+			<!-- view -->
+
+						<ui-view></ui-view>
+
+						</div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>
+
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
@@ -47,10 +69,7 @@
 <script src="./reps/repSrv.js"></script>
 <script src="./ptImplants/ptImplantsCtrl.js"></script>
 <script src="./ptImplants/ptImpSrv.js"></script>
-<script src="./ptImplants/ptImplantInfo.js"></script>
-<script src="./ptDrugs/ptDrugCtrl.js"></script>
 <script src="./ptDrugs/ptDrugSrv.js"></script>
-<script src="./ptDrugs/ptDrugInfoCtrl.js"></script>
 <script src="./login/loginCtrl.js"></script>
 <script src="./login/loginSrv.js"></script>
 

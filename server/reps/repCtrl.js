@@ -7,6 +7,7 @@ module.exports = {
 
 	find( req, res ) {
 		Rep.find( { } )
+		.populate( `updated.user`, 'name userName' )
 		.populate( `notes`, `date desc body` )
 		.populate( `materials`, `name desc nextReorderDate qty` )
 		.populate( `implants`, `brand size reference onHand minOnHand nextReorderDate` )
@@ -21,6 +22,7 @@ module.exports = {
 
 	findOne( req, res ) {
 		Rep.findById( req.params.id )
+		.populate( `updated.user`, 'name userName' )
 		.populate( `notes`, `date desc body` )
 		.populate( `materials` )
 		.populate( `implants`, `brand size reference onHand minOnHand nextReorderDate` )
