@@ -7,9 +7,28 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Drugs</h1>
-                        <button ng-click="goToCreateDrug()">Create Drug</button>
+
+        <!-- search info -->
+                        <br>
+                        <label>Search by brand name: </label>
+                        <input type="text" ng-model="search.brand">
+                        <br>
+                        <label>Search by generic name: </label>
+                        <input type="text" ng-model="search.generic">
+                        <br>
+                        <label>Search by strength: </label>
+                        <input type="text" ng-model="search.strength">
+                        <br>
+                        <label>Search by Rep: </label>
+                        <input type="text" ng-model="search.rep.name">
+                        <br>
+                        <br>
+                        <button class="btn" ng-click="goToCreateDrug()">Create Drug</button>
                         <hr>
-                        <div ng-repeat="drug in allDrugs | orderBy: 'brand' track by drug._id">
+
+        <!-- repeated drug info -->
+
+                        <div ng-repeat="drug in allDrugs | filter: search | orderBy: 'brand' track by drug._id">
                             <ul>
                                 <li ng-show="drug.needsReorder">
                                     <h3><strong>Reorder at least {{drug.reorderAmount}}!</strong></h3>
@@ -44,6 +63,9 @@
                                 <li>
                                     <strong>Last updated</strong> {{drug.updated.date | date: 'mediumDate'}}
                                 </li>
+
+                <!-- previous order info -->
+
                                 <ul ng-repeat="order in drug.orders" ng-click="orderShow = !orderShow"><strong>Orders</strong><span class="caret"></span>
                                     <div ng-show="orderShow">
                                         <li>
@@ -55,8 +77,8 @@
                                     </div>
                                 </ul>
                                 <br>
-                                <button>Reorder</button>
-                                <button ng-click="goToUpdateDrug( drug._id )">Update</button>
+                                <button class="btn">Reorder</button>
+                                <button class="btn" ng-click="goToUpdateDrug( drug._id )">Update</button>
                             </ul>
                         <hr>
                         </div>

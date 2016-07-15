@@ -7,9 +7,22 @@
                 <div class="row">
                     <div class="col-lg-12">
 						<h1>Materials</h1>
-                        <button ng-click="goToCreateMaterial()">Create material</button>
+
+        <!-- search info -->
+                        <br>
+                        <label>Search by name: </label>
+                        <input type="text" ng-model="search.name">
+                        <br>
+                        <label>Search by description: </label>
+                        <input type="text" ng-model="search.desc">
+                        <br>
+                        <label>Search by Rep: </label>
+                        <input type="text" ng-model="search.rep.name">
+                        <br>
+                        <br>
+                        <button class="btn" ng-click="goToCreateMaterial()">Create material</button>
                         <hr>
-                        <div ng-repeat="material in allMaterials | orderBy: 'name' track by material._id">
+                        <div ng-repeat="material in allMaterials | filter : search | orderBy: 'name' track by material._id">
                             <ul>
                                 <li ng-show="material.needsReorder">
                                     <h3><strong>Reorder at least {{material.reorderAmount + ' ' + material.qtyType}}!</strong></h3>
@@ -35,6 +48,9 @@
                                 <li>
                                     <strong>Rep:</strong> {{material.rep.name}}
                                 </li>
+
+                <!-- previous order information -->
+
                                 <ul ng-repeat="order in material.orders" ng-click="orderShow = !orderShow"><strong>Orders</strong><span class="caret"></span>
                                     <div ng-show="orderShow">
                                         <li>
@@ -46,8 +62,8 @@
                                     </div>
                                 </ul>
                                 <br>
-                                <button>Reorder</button>
-                                <button ng-click="goToUpdateMaterial( material._id )">Update</button>
+                                <button class="btn">Reorder</button>
+                                <button class="btn" ng-click="goToUpdateMaterial( material._id )">Update</button>
                             </ul>
                         <hr>
                         </div>

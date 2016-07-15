@@ -7,10 +7,17 @@
                 <div class="row">
                     <div class="col-lg-12">
 						<h1>Referrals</h1>
+                        <label>Search by last name: </label>
+                        <input type="text" ng-model="search.lastName">
+                        <br>
+                        <label>Search by practice: </label>
+                        <input type="text" ng-model="search.practiceName">
+                        <br>
+                        <br>
                         <button class="btn" ng-click="goToNewReferral()">Add new referral</button>
                         <br>
                         <br>
-                        <ul ng-repeat="referral in allReferrals track by referral._id">
+                        <ul ng-repeat="referral in allReferrals | filter : search | orderBy : lastName track by referral._id">
                             <li>
                                 <strong>Name:</strong> Dr. {{referral.firstName + ' ' + referral.lastName + ' ' + referral.suffix}}
                             </li>

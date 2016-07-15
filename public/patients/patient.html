@@ -12,6 +12,9 @@
                         <br>
                         <ul>
                             <div ng-show="!showUpdateForm">
+
+                <!-- show patient information -->
+
                                 <li>
                                     <strong>Name:</strong> {{ patient.firstName + ' ' + patient.lastName }}
                                 </li>
@@ -48,6 +51,9 @@
                                     <strong>eMail:</strong> {{patient.email}}
                                 </li>
                             </div>
+
+        <!-- edit current patients information -->
+
                             <form ng-show="showUpdateForm" ng-submit="updatePatientInfo( updatePat )">
                                 <li>
                                     <strong>First name:</strong> <input type="text" ng-model="updatePat.firstName" placeholder="{{patient.firstName}}">
@@ -102,15 +108,27 @@
                                 <input class="btn" type="submit" id="submit" value="Save">
                                 <button class="btn" ng-click="clear()">Cancel</button>
                             </form>
-                            <ul ng-repeat="ref in patient.referral track by ref._id"><h3>{{patient.referral.length}} Referral(s):</h3>
-                            <button class="btn">Add new referral</button>
-                            <button class="btn">Add existing referral</button>
-                            <br>
-                            <br>
+
+        <!-- show referral information -->
+                            <h3>{{patient.referral.length}} Referral(s):</h3>
+                            <ul ng-repeat="ref in patient.referral track by ref._id">
                                 <li ng-click="getReferral( ref._id )" >
-                                    <strong>Name:</strong> <a>Dr. {{ref.firstName + ' ' + ref.lastName + ' ' + ref.suffix }}</a>
+                                    <strong><a>Dr. {{ref.firstName + ' ' + ref.lastName + ' ' + ref.suffix }}</a></strong>
                                 </li>
                             </ul>
+                            <form ng-show="showRefs" ng-submit="updatePatientInfo( addReftoPat )" name="addRef">
+                                <label for="referral select">Select referral to add:  </label>
+                                <select name="referral select" ng-model="addReftoPat.referral">
+                                  <option ng-repeat="referral in referralOptions track by referral._id"  value="{{referral._id}}">{{'Dr. ' + referral.firstName + ' ' + referral.lastName}} :&nbsp;&nbsp;&nbsp;{{referral.practiceName}}</option>
+                                </select><br>
+                                <input class="btn" type="submit" id="submit" value="Save">
+                            </form>
+                            <br>
+                            <button ng-click="addNewRef()" class="btn">Add new referral</button>
+                            <button ng-show="!showRefs" ng-click="addExistingRef()" class="btn">Add existing referral</button>
+                            <br>
+
+        <!-- show patient implants -->
 
                             <ul ng-repeat="implant in patient.implants track by implant._id"><h3>{{patient.implants.length}} Implant(s):</h3>
                                 <li ng-click="show = !show">
@@ -161,6 +179,9 @@
                                     </div>
                                 </div>
                             </ul>
+
+            <!-- show patient drugs -->
+
                             <ul ng-repeat="drug in patient.drugs track by drug._id"><h3>{{patient.drugs.length}} Drug(s)</h3>
                                 <li ng-click="show = !show">
                                     <strong>Date:</strong> {{drug.date | date : 'mediumDate'}} <span class="caret"></span>

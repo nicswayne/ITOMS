@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'patCtrl', function( patSrv, $scope, $stateParams, $state, loginSrv ) {
+.controller( 'patCtrl', function( patSrv, $scope, $stateParams, $state, loginSrv, referralSrv ) {
 
 	getPatient = ( id ) => {
 		if ( id.id === `create` ) {
@@ -8,9 +8,20 @@ angular.module( 'ITOMS' )
 		}
 		patSrv.getPatient( id )
 			.then( ( response ) => {
-				console.log( 'pat', response );
+				// console.log( 'pat', response );
 				$scope.patient = response;
 			} );
+	};
+
+	$scope.addExistingRef = () => {
+		if ( loginSrv.hasRight( `updatePatient` ) ) {
+			$scope.showRefs = !$scope.showRefs;
+			referralSrv.getReferrals()
+				.then( ( res ) => {
+					$scope.referralOptions = res;
+					// console.log( 'options', $scope.referralOptions );
+				} );
+		}
 	};
 
 	$scope.canUpdate = () => {
@@ -48,6 +59,12 @@ angular.module( 'ITOMS' )
 			return;
 		}
 		else if ( loginSrv.hasRight( `updatePatient` ) ) {
+			// console.log( 'objref', obj.referral );
+			obj.referral = [ obj.referral ];
+			$scope.patient.referral.forEach( val => {
+				obj.referral.push( val );
+			} )
+			// console.log( 'obj array', obj );
 			patSrv.updatePatient( $stateParams.id, obj )
 				.then( res => {
 					$state.go( $state.current, { 'id': res._id }, { reload: true } );

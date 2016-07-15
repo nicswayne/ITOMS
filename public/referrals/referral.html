@@ -10,6 +10,7 @@
                         <button ng-show="!showUpdateForm" class="btn" ng-click="canUpdate()">Edit referral info</button>
                         <br>
                         <br>
+            <!-- Show referral info -->
                         <ul>
                             <div ng-show="!showUpdateForm">
                                 <li>
@@ -29,6 +30,7 @@
                                 </li>
                                 <hr>
                             </div>
+            <!-- update form -->
                             <form ng-show="showUpdateForm" ng-submit="updateReferralInfo( updateRef )">
                                 <li>
                                     <strong>First name:</strong> <input type="text" ng-model="updateRef.firstName" placeholder="{{oneRef.firstName}}">
@@ -62,6 +64,8 @@
                                 <button class="btn" ng-click="clear()">Cancel</button>
                             </form>
                         </ul>
+
+            <!-- address form -->
                             <div ng-show="!showAddress">
                                 <button ng-show="!addLoc" class="btn" ng-click="canUpdateLoc()">Add location</button>
                                 <br>
@@ -84,6 +88,7 @@
                                 </form>
                             </div>
                             <br>
+            <!-- location display -->
                             <h4><strong>Locations</strong></h4>
                             <div>
                                 <ul ng-repeat="address in oneRef.locations">
@@ -99,6 +104,7 @@
                                         </li>
                                         <br>
                                     </div>
+                    <!-- location update -->
                                     <div ng-show="showAddress">
                                         <form ng-submit="updateLocationInfo( updateLocation )"><strong>Address</strong>
                                             <ul>
@@ -123,6 +129,7 @@
                             </div>
                             <br>
                             <hr>
+                <!-- update note form -->
                             <div ng-show="!noteUpdateShow">
                                 <button  ng-show="!noteShow" ng-click="canCreateNote()" class="btn">Add note</button>
                                 <form ng-show="noteShow" ng-submit="createNote( newNote )"><h3>New note</h3>
@@ -144,6 +151,8 @@
                                     <button class="btn" ng-click="clear()">Cancel</button>
                                 </form>
                             </div>
+
+                <!-- show notes -->
                             <h3>Notes</h3>
                             <div>
                                 <ul ng-repeat="note in oneRef.notes">
@@ -182,7 +191,10 @@
                                     <button ng-show="!noteUpdateShow" class="btn" ng-click="canUpdateNote()">Edit note</button>
                                 </ul>
                             <hr>
-                            <ul ng-click="getPatient( patient._id )" ng-repeat="patient in oneRef.patients track by patient._id"><h3>Patients:</h3>
+
+                <!-- show patients -->
+                            <h3>Patients:</h3>
+                            <ul ng-click="getPatient( patient._id )" ng-repeat="patient in oneRef.patients track by patient._id">
                                 <li>
                                     <strong>Name:</strong> <a>{{patient.firstName}} {{patient.lastName}}</a>
                                 </li>
@@ -195,6 +207,7 @@
                                 <li>
                                     <strong>Number of implants</strong> {{patient.implants.length}}
                                 </li>
+                                <br>
                             </ul>
                             </div>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->

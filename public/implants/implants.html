@@ -7,9 +7,28 @@
                 <div class="row">
                     <div class="col-lg-12">
 						<h1>Implants</h1>
-                        <button ng-click="goToCreateImplant()">Create Implant</button>
+
+        <!-- search info -->
+                        <br>
+                        <label>Search by brand name: </label>
+                        <input type="text" ng-model="search.brand">
+                        <br>
+                        <label>Search by size: </label>
+                        <input type="text" ng-model="search.size">
+                        <br>
+                        <label>Search by reference number: </label>
+                        <input type="text" ng-model="search.reference">
+                        <br>
+                        <label>Search by Rep: </label>
+                        <input type="text" ng-model="search.rep.name">
+                        <br>
+                        <br>
+                        <button class="btn" ng-click="goToCreateImplant()">Create Implant</button>
                         <hr>
-                        <div ng-repeat="implant in allImplants | orderBy: 'brand' track by implant._id">
+
+        <!-- repeated implant info -->
+        
+                        <div ng-repeat="implant in allImplants | filter: search | orderBy: 'brand' track by implant._id">
                             <ul>
                                 <li ng-show="implant.needsReorder">
                                     <h3><strong>Reorder at least {{implant.reorderAmount}}!</strong></h3>
@@ -35,6 +54,9 @@
                                 <li>
                                     <strong>Last updated</strong> {{implant.updated.date | date: 'mediumDate'}}
                                 </li>
+
+                <!-- previouse orders info -->
+
                                 <ul ng-repeat="order in implant.orders" ng-click="orderShow = !orderShow"><strong>Orders</strong><span class="caret"></span>
                                     <div ng-show="orderShow">
                                         <li>
@@ -46,8 +68,8 @@
                                     </div>
                                 </ul>
                                 <br>
-                                <button>Reorder</button>
-                                <button ng-click="goToUpdateImplant( implant._id )">Update</button>
+                                <button class="btn">Reorder</button>
+                                <button class="btn" ng-click="goToUpdateImplant( implant._id )">Update</button>
                             </ul>
                         <hr>
                         </div>

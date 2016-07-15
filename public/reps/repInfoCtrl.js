@@ -26,13 +26,13 @@ angular.module( 'ITOMS' )
 			$scope.showUpdateForm = !$scope.showUpdateForm;
 		}
 	};
-	
+
 	$scope.canUpdateNote = () => {
 		if ( loginSrv.hasRight( `updateNote` ) ) {
 			$scope.noteUpdateShow = !$scope.noteUpdateShow;
 		}
 	};
-	
+
 	$scope.clear = () => {
 		$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
 	};

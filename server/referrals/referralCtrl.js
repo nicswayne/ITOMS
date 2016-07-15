@@ -23,7 +23,7 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( populatedReferral );
-		})
+		} );
 	},
 
 	update( req, res, next ) {
@@ -32,7 +32,7 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			return res.status( 200 ).json( referral );
-		} )
+		} );
 	},
 
 	create( req, res, next ) {

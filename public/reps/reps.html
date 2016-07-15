@@ -7,10 +7,23 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h2>Reps</h2>
+
+            <!-- search -->
+
+                        <br>
+                        <label>Search by name: </label>
+                        <input type="text" ng-model="search.name">
+                        <br>
+                        <label>Search by company: </label>
+                        <input type="text" ng-model="search.companies">
+                        <br>
+                        <br>
                         <button class="btn" ng-click="goToNewRep()">Add new rep</button>
                         <br>
-                        <br>
-                        <ul ng-click="getRep( rep._id )" ng-repeat="rep in reps track by rep._id">
+
+            <!-- repeated rep info -->
+
+                        <ul ng-click="getRep( rep._id )" ng-repeat="rep in reps | filter: search | orderBy : name track by rep._id">
                             <li>
                                 <strong>Name:</strong> {{rep.name}}
                             </li>
