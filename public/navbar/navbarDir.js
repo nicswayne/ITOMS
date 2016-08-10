@@ -4,7 +4,7 @@ angular.module( 'ITOMS' )
 	return {
 
 		templateUrl: './navbar/navbar.html'
-		, controller: function( $scope, $state, $cookies, loginSrv ) {
+		, controller: function( $scope, $state, $cookies, loginSrv, $stateParams ) {
 
 			let user = $cookies.getObject( `user` );
 			// console.log( `navbar user cookies`, user );
@@ -26,11 +26,24 @@ angular.module( 'ITOMS' )
             };
 
             checkAdmin = () => {
-            	if ( user.isAdmin ){
+            	if ( !user ){
+            		$scope.isAdmin = false;
+            	} else if ( user.isAdmin === true ){
             		$scope.isAdmin = true;
             	}
             }
-            checkAdmin();
+
+            checkState = () => {
+              if ( $stateParams.id === `login` ) {
+                $scope.loginView = true;
+                return;
+              }
+              $scope.loginView = false;
+              checkAdmin();
+
+           	}
+
+           	checkState();
 
 		}
 	};
