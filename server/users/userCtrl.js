@@ -29,16 +29,18 @@ module.exports = {
 		} );
 	},
 
-	create( req, res, next ) {
-		new User( req.body ).save( ( err, newUser ) => {
+	create( req, res ) {
+		let newUser = new User( req.body );
+		newUser.password = newUser.generateHash( req.body.password );
+		newUser.save( ( err, userCreated ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			return res.status( 201 ).json( newUser );
-		} );
+			return res.status( 201 ).json( userCreated );
+		} )
 	},
 
-	delete( req, res, next ) {
+	delete( req, res ) {
 		User.findByIdAndRemove( req.params.id, ( err, deletedUser ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
@@ -49,12 +51,16 @@ module.exports = {
 
 	loginUser( req, res ) {
 		console.log( 'req', req.body );
-		User.findOne( { 'userName' : req.body.userName }, ( err, user ) => {
+		User.findOne( { 'username' : req.body.username }, ( err, user ) => {
+			// console.log( "user", user )
             if ( err ) {
-				return res.status( 500 ).json( `user name not found` );
+				return res.status( 500 ).json( err );
             }
-            else if ( req.body.password !== user.password ) {
-				return res.status( 500 ).json( `incorrect password` );
+            if ( !user ) {
+            	return res.status( 401 ).json( `user name not found` );
+            }
+            else if ( req.body.password !== user.password ) ) {
+				return res.status( 401 ).json( `incorrect password` );
             }
             return res.status( 200 ).json(  user );
         } );

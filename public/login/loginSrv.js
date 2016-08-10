@@ -4,7 +4,7 @@ angular.module( 'ITOMS' )
 	this.login = ( obj ) => {
 		return $http.post( `${ server }login`, obj )
 		.then( ( res ) => {
-				if ( res.data.userName === obj.userName && res.data.password === obj.password && res.data.active === true ) {
+				if ( res.data.username === obj.username ) {
 					res.data.isLoggedIn = true;
 					$cookies.putObject( 'user', res.data );
 					return res.data;
