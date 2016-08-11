@@ -89,15 +89,15 @@ module.exports = {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			else if ( req.params.referral ) {
-				Referrals.findByIdAndUpdate( req.params.referral._id, { $push: { 'patient': newPatient._id } }, ( err, note ) => {
+			else if ( req.body.referral ) {
+				Referrals.findByIdAndUpdate( req.body.referral._id, { $push: { 'patient': newPatient._id } }, ( err, ref ) => {
 					if ( err ) {
 						return res.status( 500 ).json( err );
 					}
-					return res.status( 200 ).json( note );
+					return res.status( 200 ).json( ref );
 				} );
 			}
-			return res.status( 200 ).json( patient );
+			return res.status( 200 ).json( newPatient );
 		} );
 	}
 

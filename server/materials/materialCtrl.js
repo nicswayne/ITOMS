@@ -3,7 +3,7 @@ const Order = require( '../Orders/Orders' )
 
 module.exports = {
 
-	find( req, res, next ) {
+	find( req, res ) {
 		Material.find( { } )
 		.populate( `updated.user`, 'name userName' )
 		.populate( `rep`, `name phone fax email` )
@@ -16,7 +16,7 @@ module.exports = {
 		})
 	},
 
-	findOne( req, res, next ) {
+	findOne( req, res ) {
 		Material.findById( req.params.id )
 		.populate( `updated.user`, 'name userName' )
 		.populate( `rep`, `name phone fax email` )
@@ -35,7 +35,7 @@ module.exports = {
 		})
 	},
 
-	update( req, res, next ) {
+	update( req, res ) {
 		Material.findByIdAndUpdate( req.params.id, req.body, ( err, material ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
@@ -44,7 +44,8 @@ module.exports = {
 		} )
 	},
 
-	create( req, res, next ) {
+	create( req, res ) {
+		console.log( req.body );
 		new Material( req.body ).save( ( err, newMaterial ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );

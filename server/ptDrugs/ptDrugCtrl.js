@@ -35,12 +35,10 @@ module.exports = {
 	},
 
 	create( req, res ) {
-		console.log( 'req', req.body );
 		new PtDrug( req.body ).save( ( err, newPtDrug ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			console.log( 'new drug', newPtDrug );
 			Patient.findByIdAndUpdate( newPtDrug.patient, { $push: { drugs: newPtDrug._id } }, ( err, pat ) => {
 				if ( err ) {
 					return res.status( 500 ).json( err );

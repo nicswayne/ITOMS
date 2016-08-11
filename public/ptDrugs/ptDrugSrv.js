@@ -2,7 +2,6 @@ angular.module( 'ITOMS' )
 .service( 'ptDrugSrv', function( server, $http ) {
 
 	this.createPtDrug = ( obj ) => {
-		console.log( 'drug obj', obj );
 		return $http.post( `${ server }ptDrugs`, obj )
 			.then( ( res ) => {
 				return res.data;

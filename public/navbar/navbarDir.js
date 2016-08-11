@@ -4,33 +4,50 @@ angular.module( 'ITOMS' )
 	return {
 
 		templateUrl: './navbar/navbar.html'
-		, controller: function( $scope, $state, $cookies, loginSrv ) {
+		, controller: function( $scope, $state, $cookies, loginSrv, $stateParams ) {
 
 			let user = $cookies.getObject( `user` );
 			// console.log( `navbar user cookies`, user );
 
 			$scope.goTo = ( state ) => {
-				if ( loginSrv.isLoggedIn() ) {
+				if ( loginSrv.isLoggedIn() === true ) {
 					$state.go( state, {
 						url: `/${ state }`
 					} );
 				return;
-				}
-				$state.go( `login` );
+				} else {
+  				$state.go( `login` );
+        }
 			};
-            $scope.logout = () => {
-            	$cookies.remove( 'user' );
-            	$state.go( `login`, {
-            		url: `/login`
-            	} );
-            };
 
-            checkAdmin = () => {
-            	if ( user.isAdmin ){
-            		$scope.isAdmin = true;
-            	}
-            }
-            checkAdmin();
+      $scope.logout = () => {
+        loginSrv.logout();
+        $cookies.remove( 'user' );
+      	$state.go( `login`, {
+      		url: `/login`
+      	} );
+      };
+
+      checkAdmin = () => {
+        const user = $cookies.getObject( 'user' );
+      	if ( !user.isAdmin ){
+      		return $scope.isAdmin = false;
+      	}
+        $scope.isAdmin = true;
+      }
+
+      checkState = () => {
+        if ( $stateParams.id === `login` ) {
+          $scope.loginView = true;
+          return;
+        }
+        $scope.loginView = false;
+        checkAdmin();
+
+     	}
+
+     	checkState();
+
 
 		}
 	};

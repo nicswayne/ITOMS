@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'drugInfoCtrl', function( $scope, drugSrv, $state, $stateParams ) {
+.controller( 'drugInfoCtrl', function( $scope, drugSrv, $state, $stateParams, loginSrv ) {
 
 	getDrugInfo = ( id ) => {
 		if ( id.id === `create` ) {
@@ -17,21 +17,27 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.goToUpdateDrug = ( id ) => {
-		$state.go( `drugInfo`, { id } );
+		if ( loginSrv.hasRight( `updateDrug` ) ) {
+			$state.go( `drugInfo`, { id } );
+		}
 	};
 
 	$scope.updateDrugInfo = ( obj ) => {
-		drugSrv.updateDrug( obj, $stateParams )
-		.then( res => {
-			$state.go( $state.current, { 'id': res._id }, { reload: true } );
-		} );
+		if ( loginSrv.hasRight( `updateDrug` ) ) {
+			drugSrv.updateDrug( obj, $stateParams )
+			.then( res => {
+				$state.go( `drugs` );
+			} );
+		}
 	};
 
 	$scope.createDrug = ( obj ) => {
-		drugSrv.createDrug( obj )
-			.then( res => {
-				$state.go( $state.current, { 'id': res._id }, { reload: true } );
-			} );
+		if ( loginSrv.hasRight( `createDrug` ) ) {
+			drugSrv.createDrug( obj )
+				.then( res => {
+					$state.go( `drugs` );
+				} );
+			}
 	};
 	$scope.params = $stateParams.id !== `create`;
 

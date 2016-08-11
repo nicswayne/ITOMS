@@ -1,5 +1,5 @@
 angular.module( 'ITOMS' )
-.controller( 'implantInfoCtrl', function( $scope, impSrv, $state, $stateParams ) {
+.controller( 'implantInfoCtrl', function( $scope, impSrv, $state, $stateParams, loginSrv ) {
 
 	getImplantInfo = ( id ) => {
 		if ( id.id === `create` ) {
@@ -17,22 +17,27 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.goToUpdateImplant = ( id ) => {
-		$state.go( `implantInfo`, { id } );
+		if ( loginSrv.hasRight( `updateImplant` ) ) {
+			$state.go( `implantInfo`, { id } );
+		}
 	};
 
 	$scope.updateImplantInfo = ( obj ) => {
-		impSrv.updateImplant( obj, $stateParams )
-		.then( res => {
-			console.log( 'res', res );
-			$state.go( $state.current, { 'id': res._id }, { reload: true } );
-		} );
+		if ( loginSrv.hasRight( `updateImplant` ) ) {
+			impSrv.updateImplant( obj, $stateParams )
+			.then( res => {
+				$state.go( $state.current, { 'id': res._id }, { reload: true } );
+			} );
+		}
 	};
 
 	$scope.createImplant = ( obj ) => {
-		impSrv.createImplant( obj )
-			.then( res => {
-				$state.go( `implants` );
-			} );
+		if ( loginSrv.hasRight( `createImplant` ) ) {
+			impSrv.createImplant( obj )
+				.then( res => {
+					$state.go( `implants` );
+				} );
+			}
 	};
 	$scope.params = $stateParams.id !== `create`;
 

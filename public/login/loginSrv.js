@@ -4,22 +4,24 @@ angular.module( 'ITOMS' )
 	this.login = ( obj ) => {
 		return $http.post( `${ server }login`, obj )
 		.then( ( res ) => {
-				if ( res.data.userName === obj.userName && res.data.password === obj.password && res.data.active === true ) {
-					res.data.isLoggedIn = true;
-					$cookies.putObject( 'user', res.data );
-					return res.data;
-				}
-				return `incorrect Username or Password`;
+				res.data.isLoggedIn = true;
+				res.data.password = "";
+				res.data.username = "";
+				res.data._id = "";
+				res.data.name = "";
+				$cookies.putObject( 'user', res.data );
+				return;
 			} );
 	};
 
 	this.isLoggedIn = () => {
 		const user = $cookies.getObject( 'user' );
-		if ( user.isLoggedIn ) {
-			return true;
+		if ( !user || !user.isLoggedIn ) {
+			return false;
 		}
-		return false;
+		return true;
 	};
+
 	this.hasRight = ( right ) => {
 		const user = $cookies.getObject( 'user' );
 		if ( user[ right ] === true ) {
@@ -27,6 +29,12 @@ angular.module( 'ITOMS' )
 		}
 		alert( `you are not authorized to do that` );
 		return false;
+	};
+	this.logout = () => {
+		return $http.get( `${ server }logout` )
+			.then( res => {
+				return res.data;
+			} )
 	};
 
 } );

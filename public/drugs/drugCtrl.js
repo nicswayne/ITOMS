@@ -1,11 +1,10 @@
 angular.module( 'ITOMS' )
-.controller( 'drugCtrl', function( $scope, drugSrv, $state ) {
+.controller( 'drugCtrl', function( $scope, drugSrv, $state, loginSrv ) {
 
 	getDrugs = () => {
 		drugSrv.getAllDrugs()
 		.then( res => {
 			$scope.allDrugs = res;
-			console.log( 'drugs', res );
 		} );
 	};
 
@@ -14,11 +13,15 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.goToUpdateDrug = ( id ) => {
-		$state.go( `drugInfo`, { id } );
+		if ( loginSrv.hasRight( `updateDrug` ) ) {
+			$state.go( `drugInfo`, { id } );
+		}
 	};
 
 	$scope.goToCreateDrug = () => {
-		$state.go( `drugInfo`, { 'id': `create` } );
+		if ( loginSrv.hasRight( `createDrug` ) ) {
+			$state.go( `drugInfo`, { 'id': `create` } );
+		}
 	}
 
 	getDrugs();

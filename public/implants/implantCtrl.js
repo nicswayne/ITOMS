@@ -1,11 +1,10 @@
 angular.module( 'ITOMS' )
-.controller( 'implantCtrl', function( $scope, impSrv, $state ) {
+.controller( 'implantCtrl', function( $scope, impSrv, $state, loginSrv ) {
 
 	getImplants = () => {
 		impSrv.getAllImplants()
 		.then( res => {
 			$scope.allImplants = res;
-			console.log( 'implants', res );
 		} );
 	};
 	
@@ -14,11 +13,15 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.goToUpdateImplant = ( id ) => {
-		$state.go( `implantInfo`, { id } );
+		if ( loginSrv.hasRight( `updateImplant` ) ) {
+			$state.go( `implantInfo`, { id } );
+		}
 	};
 
 	$scope.goToCreateImplant = () => {
-		$state.go( `implantInfo`, { 'id': `create` } );
+		if ( loginSrv.hasRight( `createImplant` ) ) {
+			$state.go( `implantInfo`, { 'id': `create` } );
+		}
 	}
 
 	getImplants();

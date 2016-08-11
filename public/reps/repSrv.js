@@ -2,7 +2,6 @@ angular.module( 'ITOMS' )
 .service( 'repSrv', function( server, $http ) {
 
 	this.createNote = ( obj ) => {
-		console.log( 'obj', obj );
 		return $http.post( `${ server }repNotes`, obj )
 			.then( ( res ) => {
 				return res.data;

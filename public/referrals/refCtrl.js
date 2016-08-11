@@ -8,17 +8,18 @@ angular.module( 'ITOMS' )
 		}
 		referralSrv.getReferral( id )
 			.then( ( response ) => {
-				console.log( "oneRef", response );
 				$scope.oneRef = response;
 			} );
 	};
 
 	$scope.addLocation = ( obj ) => {
-		$scope.oneRef.locations.push( obj );
-		referralSrv.updateReferral( $stateParams.id, $scope.oneRef )
-			.then( ( res ) => {
-				$state.go( $state.current, { 'id': res._id }, { reload: true } );
-			} );
+		if ( loginSrv.hasRight( `updateReferral` ) ) {
+			$scope.oneRef.locations.push( obj );
+			referralSrv.updateReferral( $stateParams.id, $scope.oneRef )
+				.then( ( res ) => {
+					$state.go( $state.current, { 'id': res._id }, { reload: true } );
+				} );
+			}
 	};
 
 	$scope.canCreateNote = () => {
@@ -69,14 +70,16 @@ angular.module( 'ITOMS' )
 	}
 
 	$scope.createNote = ( obj ) => {
-		if ( !obj.date ) {
-			obj.date = new Date();
+		if ( loginSrv.hasRight( `createNote` ) ) {
+			if ( !obj.date ) {
+				obj.date = new Date();
+			}
+			obj.refId = $stateParams.id;
+			referralSrv.createNote( obj )
+				.then( res => {
+					$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
+				} );
 		}
-		obj.refId = $stateParams.id;
-		referralSrv.createNote( obj )
-			.then( res => {
-				$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
-			} );
 	};
 
 	$scope.date = new Date();

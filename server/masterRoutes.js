@@ -11,9 +11,9 @@ const ptImplantRoutes = require( './ptImplants/ptImplantRoutes' );
 const ptDrugRoutes = require( './ptDrugs/ptDrugRoutes' );
 const inventoryRoutes = require( './inventory/inventoryRoutes' );
 
-module.exports = ( app ) => {
+module.exports = ( app, passport ) => {
 
-	userRoutes( app );
+	userRoutes( app, passport );
 	drugRoutes( app );
 	orderRoutes( app );
 	implantRoutes( app );

@@ -1,11 +1,10 @@
 angular.module( 'ITOMS' )
-.controller( 'materialCtrl', function( $scope, materialSrv, $state ) {
+.controller( 'materialCtrl', function( $scope, materialSrv, $state, loginSrv ) {
 
 	getMaterials = () => {
 		materialSrv.getAllMaterials()
 		.then( res => {
 			$scope.allMaterials = res;
-			console.log( 'materials', res );
 		} );
 	};
 	
@@ -14,11 +13,15 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.goToUpdateMaterial = ( id ) => {
-		$state.go( `materialInfo`, { id } );
+		if ( loginSrv.hasRight( `updateMaterial` ) ) {
+			$state.go( `materialInfo`, { id } );
+		}
 	};
 
 	$scope.goToCreateMaterial = () => {
-		$state.go( `materialInfo`, { 'id': `create` } );
+		if ( loginSrv.hasRight( `createMaterial` ) ) {
+			$state.go( `materialInfo`, { 'id': `create` } );
+		}
 	}
 
 	getMaterials();

@@ -4,7 +4,7 @@ const Orders = require( '../orders/Orders' );
 
 module.exports = {
 
-	find( req, res, next ) {
+	find( req, res ) {
 		Inventory.find( { } )
 		.populate( `implants` )
 		.populate( `drugs` )
@@ -35,7 +35,7 @@ module.exports = {
 			} );
 		} );
 	},
-	create( req, res, next ) {
+	create( req, res ) {
 		new Inventory( req.body ).save( ( err, inventory ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );

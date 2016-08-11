@@ -7,10 +7,8 @@ angular.module( 'ITOMS' )
 		} );
 	};
 	this.getRep = function( repId ) {
-		console.log( `path ${ server }reps/${ repId }` );
 		return $http.get( `${ server }reps/${ repId }` )
 		.then( ( res ) => {
-			console.log( `res data ${ res }` );
 			return res;
 		} );
 	};

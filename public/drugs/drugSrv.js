@@ -39,7 +39,6 @@ angular.module( 'ITOMS' )
 		obj.updated.date = new Date();
 		return $http.post( `${ server }drugs`, obj )
 			.then( res => {
-				console.log( 'res.data', res.data );
 				return res.data;
 			} );
 	};

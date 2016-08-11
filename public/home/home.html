@@ -84,17 +84,17 @@
                                 <strong>Name:</strong> {{material.name}}
                             </li>
                             <li>
-                                <strong>On Hand:</strong> {{material.qty}} {{material.qtyType}}
+                                <strong>On Hand:</strong> {{material.onHand}} {{material.qtyType}}
                             </li>                            
                             <li>
-                                <strong>Amount to Order:</strong> {{material.minQty - material.qty}} {{material.qtyType}}
+                                <strong>Amount to Order:</strong> {{material.minOnHand - material.onHand}} {{material.qtyType}}
                             </li>
                             <ul ng-show="show">
                                 <li>
                                     <strong>Description:</strong> {{material.desc}}
                                 </li>
                                 <li>
-                                    <strong>Min Quantity:</strong> {{material.minQty}} {{material.qtyType}}
+                                    <strong>Min Quantity:</strong> {{material.minOnHand}} {{material.qtyType}}
                                 </li>
                                 <li>
                                     <strong>Next Reorder Date:</strong> {{material.nextReorderDate | date : 'MMM d, y'}}
@@ -109,6 +109,7 @@
                                     <strong>Last Order Quantity:</strong> {{material.orders[material.orders.length - 1].qty}}
                                 </li>
                             </ul>
+                            <br/>
                             <button class="btn" ng-click="getRep(material.rep)">Contact Rep</button>
                         </ul>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->

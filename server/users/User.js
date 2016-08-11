@@ -4,7 +4,7 @@ const bcrypt = require( 'bcrypt-nodejs' );
 const User = mongoose.Schema( {
 
 	name: { type: String, required: true, trim: true },
-	userName: { type: String, unique: true, required: true, trim: true },
+	username: { type: String, unique: true, required: true, trim: true },
 	password: { type: String, required: true, trim: true, min: 8 },
 	// practice: { type: mongoose.Schema.Types.ObjectId, ref: `Practice` },
 	active: { type: Boolean, default: true },
@@ -45,11 +45,11 @@ const User = mongoose.Schema( {
 } );
 
 User.methods.generateHash = ( password ) => {
-	return bycrypt.hashSync( password, bycrypt.genSaltSync( 8 ) );
-}
+	return bcrypt.hashSync( password, bcrypt.genSaltSync( 8 ) );
+};
 
-User.methods.validPassword = ( password ) => {
-	return bycrypt.compareSync( password, this.password );
-}
+User.methods.validPassword = ( password, userPassword ) => {
+	return bcrypt.compareSync( password, userPassword );
+};
 
 module.exports = mongoose.model( 'User', User );

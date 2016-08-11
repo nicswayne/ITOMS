@@ -30,8 +30,7 @@ angular.module( 'ITOMS' )
 	};
 
 	this.getUser = ( info ) => {
-		console.log( info );
-		return $http.get( `${ server }users/${ info.implants.updated.user} ` )
+		return $http.get( `${ server }users/${ info.implants.updated.user } ` )
 			.then( ( res ) => {
 				return res.data;
 			} );

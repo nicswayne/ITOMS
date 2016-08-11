@@ -8,7 +8,6 @@ angular.module( 'ITOMS' )
 		}
 		patSrv.getPatient( id )
 			.then( ( response ) => {
-				console.log( 'pat', response );
 				$scope.patient = response;
 			} );
 	};
@@ -102,7 +101,6 @@ angular.module( 'ITOMS' )
 			}
 			obj.patient = $stateParams.id;
 			obj.updated = { date: new Date() };
-			console.log( 'imp obj', obj );
 			ptImpSrv.createPtImp( obj )
 			.then( res => {
 					$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
@@ -123,7 +121,7 @@ angular.module( 'ITOMS' )
 	};
 
 	$scope.updatePatientInfo = ( obj ) => {
-		if ( $stateParams.id === `create` ) {
+		if ( $stateParams.id === `create` && loginSrv.hasRight( `createPatient` ) ) {
 			patSrv.createPatient( obj )
 			.then( res => {
 				$state.go( $state.current, { 'id': res._id }, { reload: true } );

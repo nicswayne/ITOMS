@@ -12,7 +12,6 @@ angular.module( 'ITOMS' )
 				$scope.drugShow = res.drugs.length !== 0;
 				$scope.materialShow = res.materials.length !== 0;
 				$scope.rep = res;
-				console.log( 'rep', res );
 			}
 		);
 	 };
@@ -75,6 +74,16 @@ angular.module( 'ITOMS' )
 		$state.go( $state.current, { 'id': $stateParams.id }, { reload: true } );
 	};
 
+	$scope.createNote = ( obj ) => {
+		if( loginSrv.hasRight( `createNote` ) ) {
+			obj.repId = $stateParams.id;
+			repSrv.createNote( obj )
+			.then( res => {
+				$state.go( $state.current, { 'id': res.repId }, { reload: true } );
+			} )
+		}
+	}
+
 	$scope.reorderNeeded = function( item ) {
 		return item.onHand < item.minOnHand;
 	};
@@ -82,6 +91,15 @@ angular.module( 'ITOMS' )
 	$scope.amountToReorder = function( item ) {
 		return item.minOnHand - item.onHand;
 	};
+
+	$scope.updateThisNote = ( id, obj ) => {
+		if( loginSrv.hasRight( `updateNote` ) ) {
+			repSrv.updateNote ( id, obj )
+				.then( res => {
+					$state.go( $state.current, { 'id': res.repId }, { reload: true } )
+				} );
+		}
+	}
 
 	$scope.updateRepInfo = ( obj ) => {
 		if ( loginSrv.hasRight( `updateRep` ) ) {

@@ -41,7 +41,6 @@ module.exports = {
 				return res.status( 500 ).json( err );
 			}
 			if ( req.body.implants ) {
-				console.log( 'rep implants', rep.implants );
 				Implants.findByIdAndUpdate( rep.implants[ 0 ], { rep: rep._id }, ( err, imp ) => {
 					if ( err ) {
 						return res.status( 500 ).json( err );

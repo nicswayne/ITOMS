@@ -21,20 +21,28 @@ module.exports = {
 	},
 
 	update( req, res, next ) {
-		User.findByIdAndUpdate( req.params.id, req.body, ( err, User ) => {
+		User.findById( req.params.id, ( err, user ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			return res.status( 200 ).json( User );
+			req.body.password = user.generateHash( req.body.password )
+			User.findByIdAndUpdate( user._id, req.body, { new: true }, ( err, updatedUser ) => {
+				if ( err ) {
+					return res.status( 500 ).json( err );
+				}
+				return res.status( 200 ).json( updatedUser );
+			} )
 		} );
 	},
 
 	create( req, res, next ) {
-		new User( req.body ).save( ( err, newUser ) => {
+		let newUser = new User( req.body );
+		newUser.password = newUser.generateHash( req.body.password );
+		newUser.save( ( err, createdUser ) => {
 			if ( err ) {
 				return res.status( 500 ).json( err );
 			}
-			return res.status( 201 ).json( newUser );
+			return res.status( 201 ).json( createdUser );
 		} );
 	},
 
@@ -47,28 +55,14 @@ module.exports = {
 		} );
 	},
 
-	loginUser( req, res ) {
-		console.log( 'req', req.body );
-		User.findOne( { 'userName' : req.body.userName }, ( err, user ) => {
-            if ( err ) {
-				return res.status( 500 ).json( `user name not found` );
-            }
-            else if ( req.body.password !== user.password ) {
-				return res.status( 500 ).json( `incorrect password` );
-            }
-            return res.status( 200 ).json(  user );
-        } );
-		// passport.authenticate( `local-login`, {
-		// 	successRedirect : `/home`,
-		// 	failureRedirect: `/login`,
-		// 	failuerFlash: true
-		// } );
+	isLoggedIn( req, res, next ) {
+		if ( req.isAuthenticated() ) {
+			return next();
+		}
+		res.redirect( `/login` );
+	},
+	logout( req, res, next ){
+		req.logout();
+		res.redirect( '/login' )
 	}
-
-	// isLoggedIn( req, res, next ) {
-	// 	if ( req.isAuthenticated() ) {
-	// 		return next();
-	// 	}
-	// 	res.redirect( `/login` );
-	// }
 }

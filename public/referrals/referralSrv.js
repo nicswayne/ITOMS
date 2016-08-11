@@ -2,7 +2,6 @@ angular.module( 'ITOMS' )
 .service( 'referralSrv', function( $http, server ) {
 
 	this.createNote = ( obj ) => {
-		console.log( 'obj', obj );
 		return $http.post( `${ server }refNotes`, obj )
 			.then( ( res ) => {
 				return res.data;

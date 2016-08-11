@@ -4,7 +4,9 @@ angular.module( 'ITOMS' )
 	$scope.loginUser = ( obj ) => {
 		loginSrv.login( obj )
 		.then( ( res ) => {
-			$state.go( `home` );
+			console.log( 'res', res );
+			// window.location.href = document.index.html
+			$state.go( 'home' )
 			} );
 	};
 
