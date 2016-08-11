@@ -4,6 +4,7 @@ angular.module( 'ITOMS' )
 	this.login = ( obj ) => {
 		return $http.post( `${ server }login`, obj )
 		.then( ( res ) => {
+
 				res.data.isLoggedIn = true;
 				res.data.password = "";
 				res.data.username = "";

@@ -5,7 +5,7 @@ const User = mongoose.Schema( {
 
 	name: { type: String, required: true, trim: true },
 	username: { type: String, unique: true, required: true, trim: true },
-	password: { type: String, required: true, trim: true, min: 8 },
+	password: { type: String, required: true, trim: true, minLength: 8 },
 	// practice: { type: mongoose.Schema.Types.ObjectId, ref: `Practice` },
 	active: { type: Boolean, default: true },
 	isAdmin: { type: Boolean, default: true },
@@ -45,11 +45,20 @@ const User = mongoose.Schema( {
 } );
 
 User.methods.generateHash = ( password ) => {
+<<<<<<< HEAD
 	return bcrypt.hashSync( password, bcrypt.genSaltSync( 8 ) );
 };
 
 User.methods.validPassword = ( password, userPassword ) => {
 	return bcrypt.compareSync( password, userPassword );
 };
+=======
+	return bcrypt.hashSync( password, bcrypt.genSaltSync( 8 ), null );
+}
+
+User.methods.validPassword = ( password, this.password ) => {
+	return bcrypt.compareSync( password, this.password );
+}
+>>>>>>> 515dc9d894ca7f3d91693e652b1f7341a0f6f0ed
 
 module.exports = mongoose.model( 'User', User );

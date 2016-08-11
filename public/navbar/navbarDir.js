@@ -30,7 +30,7 @@ angular.module( 'ITOMS' )
 
       checkAdmin = () => {
         const user = $cookies.getObject( 'user' );
-      	if ( !user.isAdmin ){
+      	if ( !user || !user.isAdmin ){
       		return $scope.isAdmin = false;
       	}
         $scope.isAdmin = true;
@@ -47,6 +47,16 @@ angular.module( 'ITOMS' )
      	}
 
      	checkState();
+
+
+
+    // checkAdmin = () => {
+    // 	if ( !user ){
+    // 		$scope.isAdmin = false;
+    // 	} else if ( user.isAdmin === true ){
+    // 		$scope.isAdmin = true;
+    // 	}
+    // }
 
 
 		}

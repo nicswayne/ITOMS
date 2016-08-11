@@ -2,7 +2,7 @@
         <!-- update implant form -->
 
                     <div ng-show="params"
-                        <h1>Update Implant</h1>
+                        <h1><strong>Update Implant</strong></h1>
                         <div>Last updated: {{implantInfo.updated.date | date: 'mediumDate'}}</div>
                         <form ng-submit="updateImplantInfo( editImp )">
                             <ul>
@@ -42,7 +42,7 @@
         <!-- create implant form -->
 
                 <div  ng-show="!params" class="col-lg-12">
-                        <h1>Create Implant</h1>
+                        <h1><strong>Create Implant</strong></h1>
                         <form ng-submit="createImplant( newImp )">
                             <ul>
                             <br>
